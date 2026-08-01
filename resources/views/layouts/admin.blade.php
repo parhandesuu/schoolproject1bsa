@@ -130,7 +130,7 @@
          class="fixed inset-0 bg-black/50 z-40 lg:hidden" x-transition></div>
 
     {{-- MAIN --}}
-    <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out" :class="sidebarOpen ? 'lg:ml-64' : ''">
+    <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out" :class="{ 'lg:ml-64': sidebarOpen, 'lg:ml-0': !sidebarOpen }">
 
         {{-- TOP HEADER --}}
         <header class="bg-white border-b border-gray-200 sticky top-0 z-30">

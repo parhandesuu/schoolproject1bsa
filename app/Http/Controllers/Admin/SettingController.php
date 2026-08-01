@@ -11,7 +11,7 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $settings = Setting::all()->groupBy('group');
+        $settings = Setting::pluck('value', 'key');
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -20,7 +20,7 @@ class SettingController extends Controller
         $data = $request->except(['_token', '_method']);
 
         // Handle image uploads for logo and favicon
-        $imageKeys = ['logo', 'favicon', 'og_image'];
+        $imageKeys = ['school_logo', 'school_logo_2', 'favicon', 'og_image'];
 
         foreach ($imageKeys as $key) {
             if ($request->hasFile($key)) {

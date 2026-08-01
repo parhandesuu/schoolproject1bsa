@@ -16,6 +16,13 @@ class Setting extends Model
 
     public static function set(string $key, mixed $value): void
     {
-        static::updateOrCreate(['key' => $key], ['value' => $value]);
+        $setting = static::firstOrNew(['key' => $key]);
+        if (!$setting->exists) {
+            $setting->label = ucwords(str_replace('_', ' ', $key));
+            $setting->type = 'text';
+            $setting->group = 'general';
+        }
+        $setting->value = $value;
+        $setting->save();
     }
 }

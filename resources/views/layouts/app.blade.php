@@ -34,12 +34,23 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                    @php $logo = \App\Models\Setting::get('school_logo'); @endphp
-                    @if($logo)
-                        <img src="{{ asset('storage/'.$logo) }}" alt="Logo" class="h-10 w-auto">
-                    @else
-                        <div class="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
-                    @endif
+                    @php 
+                        $logo1 = \App\Models\Setting::get('school_logo'); 
+                        $logo2 = \App\Models\Setting::get('school_logo_2');
+                    @endphp
+                    
+                    <div class="flex items-center space-x-2">
+                        @if($logo1)
+                            <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-10 w-auto">
+                        @else
+                            <div class="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
+                        @endif
+
+                        @if($logo2)
+                            <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-10 w-auto">
+                        @endif
+                    </div>
+
                     <div class="hidden sm:block leading-tight">
                         <div class="font-bold text-blue-700 text-sm">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
                         <div class="text-xs text-gray-500">{{ \App\Models\Setting::get('school_name', 'UPT SMP Negeri 1 Buay Sandang Aji') }}</div>
@@ -132,15 +143,30 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                 <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white text-sm">SMP</div>
+                    <div class="flex flex-col space-y-4 mb-5">
+                        @php 
+                            $logo1 = \App\Models\Setting::get('school_logo'); 
+                            $logo2 = \App\Models\Setting::get('school_logo_2');
+                        @endphp
+                        
+                        <div class="flex items-center space-x-3">
+                            @if($logo1)
+                                <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-12 w-auto">
+                            @else
+                                <div class="w-12 h-12 bg-blue-700 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
+                            @endif
+
+                            @if($logo2)
+                                <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-12 w-auto">
+                            @endif
+                        </div>
                         <div>
-                            <div class="font-bold text-white text-sm">{{ \App\Models\Setting::get('school_short_name', 'SMAN 1') }}</div>
-                            <div class="text-xs text-gray-400">{{ \App\Models\Setting::get('school_name') }}</div>
+                            <div class="font-bold text-white text-base mb-1 leading-tight">{{ \App\Models\Setting::get('school_name', 'UPT SMP Negeri 1 Buay Sandang Aji') }}</div>
+                            <div class="text-sm text-gray-400">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1 BSA') }}</div>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-5">{{ \App\Models\Setting::get('school_motto', 'Cerdas, Berkarakter, dan Berprestasi') }}</p>
-                    <div class="flex space-x-2">
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ \App\Models\Setting::get('school_motto', 'Cerdas, Berkarakter, dan Berprestasi') }}</p>
+                    <div class="flex space-x-3">
                         @foreach(\App\Models\SocialMedia::active()->get() as $social)
                         <a href="{{ $social->url }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-sm hover:scale-110 transition-transform" style="background-color:{{ $social->color ?? '#1e40af' }}">
                             <i class="{{ $social->icon }} text-white text-sm"></i>
@@ -184,11 +210,11 @@
         </div>
     </footer>
 
-    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition">
-        <i class="fas fa-arrow-up text-white text-lg"></i>
-    </div>
-</button>
+    <button id="backToTop" class="fixed bottom-6 right-6 z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all hover:-translate-y-1">
+            <i class="fas fa-arrow-up text-white text-lg"></i>
+        </div>
+    </button>
     <script>
         const btt = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {

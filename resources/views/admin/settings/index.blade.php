@@ -23,6 +23,22 @@
 
         {{-- General --}}
         <div x-show="tab==='general'" class="admin-card space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                <div>
+                    <label class="form-label">Logo Sekolah 1 (Kiri)</label>
+                    @if(!empty($settings['school_logo']))
+                        <img src="{{ asset('storage/'.$settings['school_logo']) }}" class="h-16 w-auto mb-2 rounded border p-1 bg-white">
+                    @endif
+                    <input type="file" name="school_logo" class="input-field" accept="image/*">
+                </div>
+                <div>
+                    <label class="form-label">Logo Sekolah 2 (Kanan)</label>
+                    @if(!empty($settings['school_logo_2']))
+                        <img src="{{ asset('storage/'.$settings['school_logo_2']) }}" class="h-16 w-auto mb-2 rounded border p-1 bg-white">
+                    @endif
+                    <input type="file" name="school_logo_2" class="input-field" accept="image/*">
+                </div>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 @foreach([['school_name','Nama Sekolah','text'],['school_short_name','Nama Singkat','text'],['school_npsn','NPSN','text'],['school_accreditation','Akreditasi','text'],['school_year_established','Tahun Berdiri','number'],['school_motto','Motto Sekolah','text']] as [$key,$label,$type])
                 <div>
