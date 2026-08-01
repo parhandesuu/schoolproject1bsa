@@ -1,0 +1,50 @@
+@extends('layouts.app')
+@section('title', $album->name)
+@section('content')
+<div class="bg-gradient-to-r from-blue-800 to-blue-900 py-16">
+    <div class="container mx-auto px-4 max-w-7xl">
+        <h1 class="text-4xl font-bold text-white mb-2">{{ $album->name }}</h1>
+        <nav class="text-white/60 text-sm">
+            <a href="{{ route('home') }}" class="hover:text-white">Beranda</a> /
+            <a href="{{ route('gallery.photos') }}" class="hover:text-white">Galeri Foto</a> /
+            {{ $album->name }}
+        </nav>
+    </div>
+</div>
+<div class="container mx-auto px-4 max-w-7xl py-12" x-data="{ lightbox: false, currentSrc: '', currentAlt: '' }">
+
+    @if($album->description)
+    <p class="text-gray-600 mb-8 max-w-2xl">{{ $album->description }}</p>
+    @endif
+
+    @if($photos->count() > 0)
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        @foreach($photos as $photo)
+        <button @click="lightbox=true; currentSrc='{{ asset('storage/'.$photo->image) }}'; currentAlt='{{ $photo->caption ?? $album->name }}'"
+                class="aspect-square rounded-xl overflow-hidden group block w-full">
+            <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->caption }}"
+                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </button>
+        @endforeach
+    </div>
+
+    {{-- Lightbox --}}
+    <div x-show="lightbox" x-transition class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+         @keydown.escape.window="lightbox=false" @click="lightbox=false">
+        <div @click.stop class="relative max-w-5xl max-h-full">
+            <img :src="currentSrc" :alt="currentAlt" class="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl">
+            <p x-text="currentAlt" class="text-white text-center mt-3 text-sm opacity-75"></p>
+        </div>
+        <button @click="lightbox=false" class="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    @else
+    <div class="text-center py-20 text-gray-400"><i class="fas fa-images text-6xl mb-4 block"></i><p>Belum ada foto di album ini.</p></div>
+    @endif
+
+    <div class="mt-8">
+        <a href="{{ route('gallery.photos') }}" class="btn-outline"><i class="fas fa-arrow-left mr-2"></i>Kembali ke Galeri</a>
+    </div>
+</div>
+@endsection

@@ -1,0 +1,79 @@
+@extends('layouts.app')
+@section('title', 'Guru & Staff')
+@section('content')
+<div class="bg-gradient-to-r from-blue-800 to-blue-900 py-16">
+    <div class="container mx-auto px-4 max-w-7xl">
+        <h1 class="text-4xl font-bold text-white mb-2">Guru & Staff</h1>
+        <nav class="text-white/60 text-sm"><a href="{{ route('home') }}" class="hover:text-white">Beranda</a> / Guru & Staff</nav>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 max-w-7xl py-16" x-data="{ tab: 'guru' }">
+    {{-- Tabs --}}
+    <div class="flex gap-2 mb-10">
+        <button @click="tab='guru'" :class="tab==='guru' ? 'bg-blue-700 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'"
+                class="px-6 py-2.5 rounded-xl font-medium text-sm transition-all">
+            <i class="fas fa-chalkboard-teacher mr-2"></i>Tenaga Pendidik
+            <span class="ml-2 text-xs bg-white/20 px-1.5 py-0.5 rounded-full">{{ $teachers->count() }}</span>
+        </button>
+        <button @click="tab='staff'" :class="tab==='staff' ? 'bg-blue-700 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'"
+                class="px-6 py-2.5 rounded-xl font-medium text-sm transition-all">
+            <i class="fas fa-user-cog mr-2"></i>Tenaga Kependidikan
+            <span class="ml-2 text-xs bg-white/20 px-1.5 py-0.5 rounded-full">{{ $staff->count() }}</span>
+        </button>
+    </div>
+
+    {{-- Teachers --}}
+    <div x-show="tab==='guru'" x-transition>
+        @if($teachers->count() > 0)
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            @foreach($teachers as $teacher)
+            <div class="card p-4 text-center group hover:border-blue-200">
+                <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-300 transition-all">
+                    @if($teacher->photo)
+                    <img src="{{ asset('storage/'.$teacher->photo) }}" alt="{{ $teacher->name }}" class="w-full h-full object-cover">
+                    @else
+                    <div class="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-blue-600">{{ strtoupper(substr($teacher->name,0,1)) }}</span>
+                    </div>
+                    @endif
+                </div>
+                <div class="font-semibold text-gray-900 text-sm mb-0.5 line-clamp-2">{{ $teacher->name }}</div>
+                <div class="text-xs text-blue-600 mb-1">{{ $teacher->position }}</div>
+                @if($teacher->subject)<div class="text-xs text-gray-400">{{ $teacher->subject }}</div>@endif
+                @if($teacher->nip)<div class="text-xs text-gray-300 mt-1">{{ $teacher->nip }}</div>@endif
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center py-16 text-gray-400"><i class="fas fa-users text-5xl mb-4 block"></i><p>Data guru belum tersedia.</p></div>
+        @endif
+    </div>
+
+    {{-- Staff --}}
+    <div x-show="tab==='staff'" x-transition>
+        @if($staff->count() > 0)
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            @foreach($staff as $s)
+            <div class="card p-4 text-center group hover:border-blue-200">
+                <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-300 transition-all">
+                    @if($s->photo)
+                    <img src="{{ asset('storage/'.$s->photo) }}" alt="{{ $s->name }}" class="w-full h-full object-cover">
+                    @else
+                    <div class="w-full h-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-purple-600">{{ strtoupper(substr($s->name,0,1)) }}</span>
+                    </div>
+                    @endif
+                </div>
+                <div class="font-semibold text-gray-900 text-sm mb-0.5">{{ $s->name }}</div>
+                <div class="text-xs text-purple-600 mb-1">{{ $s->position }}</div>
+                @if($s->nip)<div class="text-xs text-gray-300 mt-1">{{ $s->nip }}</div>@endif
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center py-16 text-gray-400"><i class="fas fa-user-cog text-5xl mb-4 block"></i><p>Data staff belum tersedia.</p></div>
+        @endif
+    </div>
+</div>
+@endsection

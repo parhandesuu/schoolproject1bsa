@@ -1,0 +1,7 @@
+@php
+// Reusable profile sidebar snippet
+function profileSidebar($active) {
+    $items = [['Profil Sekolah','profile.index'],['Sejarah','profile.history'],['Visi & Misi','profile.vision-mission'],['Sambutan Kepsek','profile.principal'],['Struktur Organisasi','profile.organization']];
+    return $items;
+}
+@endphp
