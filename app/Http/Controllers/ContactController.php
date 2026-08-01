@@ -18,11 +18,11 @@ class ContactController extends Controller
         $settings = Setting::pluck('value', 'key');
 
         // Load active social media links
-        $social_media = SocialMedia::where('is_active', true)
+        $socialMedia = SocialMedia::where('is_active', true)
             ->orderBy('order')
             ->get();
 
-        return view('contact.index', compact('settings', 'social_media'));
+        return view('contact.index', compact('settings', 'socialMedia'));
     }
 
     /**

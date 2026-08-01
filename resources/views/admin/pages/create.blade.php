@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('page-title', isset($page) ? 'Edit Halaman' : 'Tambah Halaman')
 @push('scripts')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js" referrerpolicy="origin"></script>
 <script>tinymce.init({ selector: '#content', height: 400, plugins: 'anchor autolink charmap codesample image link lists table wordcount', toolbar: 'undo redo | blocks | bold italic | link image | numlist bullist | removeformat' });</script>
 @endpush
 @section('content')

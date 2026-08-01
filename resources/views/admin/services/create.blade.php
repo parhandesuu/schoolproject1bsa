@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('page-title', isset($service) ? 'Edit Layanan' : 'Tambah Layanan')
 @push('scripts')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js" referrerpolicy="origin"></script>
 <script>tinymce.init({ selector: '#content', height: 350, plugins: 'anchor autolink link lists wordcount', toolbar: 'undo redo | bold italic | link | numlist bullist' });</script>
 @endpush
 @section('content')
