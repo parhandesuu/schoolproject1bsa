@@ -6,13 +6,13 @@
 
 {{-- ===== HERO SECTION ===== --}}
 @if($hero_sliders->count() > 0)
-<section class="relative h-[560px] md:h-[680px] overflow-hidden"
+<section class="relative min-h-[700px] lg:min-h-screen overflow-hidden flex items-center"
     x-data="{
         current: 0,
         total: {{ $hero_sliders->count() }},
         autoplay: null,
         start() {
-            this.autoplay = setInterval(() => { this.next(); }, 5000);
+            this.autoplay = setInterval(() => { this.next(); }, 6000);
         },
         next() { this.current = (this.current + 1) % this.total; },
         prev() { this.current = (this.current - 1 + this.total) % this.total; }
@@ -20,34 +20,47 @@
 
     {{-- Slides --}}
     @foreach($hero_sliders as $i => $slider)
-    <div class="absolute inset-0 transition-opacity duration-700"
+    <div class="absolute inset-0 transition-opacity duration-1000"
          :class="{{ $i }} === current ? 'opacity-100 z-10' : 'opacity-0 z-0'">
+        
         @if($slider->image)
         <img src="{{ asset('storage/'.$slider->image) }}" alt="{{ $slider->title }}"
-             class="w-full h-full object-cover">
+             class="w-full h-full object-cover object-center">
         @else
         <div class="w-full h-full bg-gradient-to-br from-blue-900 to-blue-700"></div>
         @endif
-        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent"></div>
-        <div class="absolute inset-0 flex items-center">
+        
+        {{-- Overlay gradient for readability (Dark theme) --}}
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent md:to-gray-900/10"></div>
+        
+        {{-- Content --}}
+        <div class="absolute inset-0 flex items-center pt-24 pb-12">
             <div class="container mx-auto px-6 sm:px-10 lg:px-16 max-w-7xl">
-                <div class="max-w-2xl animate-fade-in">
-                    <div class="inline-flex items-center gap-2 bg-blue-600/90 text-white text-xs font-medium px-3 py-1.5 rounded-full mb-5">
+                <div class="max-w-3xl animate-fade-in">
+                    
+                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
                         <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
                         {{ \App\Models\Setting::get('school_short_name', 'SMPN 1 Buay Sandang Aji') }}
                     </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4">
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
                         {!! nl2br(e($slider->title)) !!}
                     </h1>
+                    
                     @if($slider->subtitle)
-                    <p class="text-lg md:text-xl text-white/85 mb-8 leading-relaxed">{{ $slider->subtitle }}</p>
+                    <p class="text-lg md:text-xl lg:text-2xl text-white/90 mb-10 leading-relaxed font-light max-w-2xl">{{ $slider->subtitle }}</p>
                     @endif
-                    <div class="flex flex-wrap gap-3">
+
+                    <div class="flex flex-wrap gap-4">
                         @if($slider->button_text)
-                        <a href="{{ $slider->button_url ?? '#' }}" class="btn-primary">{{ $slider->button_text }} <i class="fas fa-arrow-right text-sm"></i></a>
+                        <a href="{{ $slider->button_url ?? '#' }}" class="btn-primary">
+                            {{ $slider->button_text }}
+                        </a>
                         @endif
                         @if($slider->button_text_2)
-                        <a href="{{ $slider->button_url_2 ?? '#' }}" class="btn-white">{{ $slider->button_text_2 }}</a>
+                        <a href="{{ $slider->button_url_2 ?? '#' }}" class="btn-white">
+                            {{ $slider->button_text_2 }}
+                        </a>
                         @endif
                     </div>
                 </div>
@@ -57,41 +70,49 @@
     @endforeach
 
     {{-- Controls --}}
-    <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-all">
+    <button @click="prev()" class="absolute left-2 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 text-white shadow rounded-full flex items-center justify-center transition-all hover:scale-110 border border-white/20 backdrop-blur-md">
         <i class="fas fa-chevron-left"></i>
     </button>
-    <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-all">
+    <button @click="next()" class="absolute right-2 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 text-white shadow rounded-full flex items-center justify-center transition-all hover:scale-110 border border-white/20 backdrop-blur-md">
         <i class="fas fa-chevron-right"></i>
     </button>
 
     {{-- Dots --}}
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+    <div class="absolute bottom-10 left-6 lg:left-16 z-20 flex gap-3">
         @foreach($hero_sliders as $i => $s)
         <button @click="current = {{ $i }}" class="transition-all duration-300 rounded-full"
-                :class="{{ $i }} === current ? 'w-8 h-2.5 bg-white' : 'w-2.5 h-2.5 bg-white/50 hover:bg-white/80'"></button>
+                :class="{{ $i }} === current ? 'w-10 h-2.5 bg-orange-500' : 'w-2.5 h-2.5 bg-white/50 hover:bg-white/80'"></button>
         @endforeach
     </div>
 </section>
 @else
 {{-- Fallback Hero --}}
-<section class="relative h-[560px] bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 flex items-center overflow-hidden">
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-20 right-20 w-64 h-64 border-2 border-white rounded-full"></div>
-        <div class="absolute bottom-10 right-40 w-40 h-40 border border-white rounded-full"></div>
-    </div>
-    <div class="container mx-auto px-6 lg:px-16 max-w-7xl relative z-10">
-        <div class="max-w-2xl">
-            <div class="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-medium px-3 py-1.5 rounded-full mb-5">
+<section class="relative min-h-[700px] lg:min-h-screen overflow-hidden flex items-center">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIiBmaWxsPSJyZ2JhKDMwLCA2NCwgMTc1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-20"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent"></div>
+
+    <div class="container mx-auto px-6 lg:px-16 max-w-7xl relative z-10 pt-24 pb-12">
+        <div class="max-w-3xl animate-fade-in">
+            
+            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
                 <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
                 Website Resmi Sekolah
             </div>
-            <h1 class="text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4">
+
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
                 {{ \App\Models\Setting::get('school_name', 'SMP Negeri 1 Buay Sandang Aji') }}
             </h1>
-            <p class="text-xl text-white/85 mb-8">{{ \App\Models\Setting::get('school_motto', 'Cerdas, Berkarakter, dan Berprestasi') }}</p>
-            <div class="flex flex-wrap gap-3">
-                <a href="{{ route('profile.index') }}" class="btn-white">Profil Sekolah <i class="fas fa-arrow-right text-sm"></i></a>
-                <a href="{{ route('contact.index') }}" class="border-2 border-white text-white hover:bg-white hover:text-blue-700 font-semibold px-6 py-2.5 rounded-lg transition-all duration-200">Hubungi Kami</a>
+            
+            <p class="text-lg md:text-xl lg:text-2xl text-white/90 mb-10 leading-relaxed font-light max-w-2xl">{{ \App\Models\Setting::get('school_motto', 'Cerdas, Berkarakter, dan Berprestasi') }}</p>
+            
+            <div class="flex flex-wrap gap-4">
+                <a href="{{ route('profile.index') }}" class="btn-primary">
+                    Profil Sekolah
+                </a>
+                <a href="{{ route('contact.index') }}" class="btn-white">
+                    Hubungi Kami
+                </a>
             </div>
         </div>
     </div>
@@ -119,7 +140,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {{-- Left: Profile Text --}}
             <div>
-                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                     <i class="fas fa-school"></i> Tentang Kami
                 </div>
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
@@ -134,12 +155,12 @@
                 </p>
                 <div class="flex items-center gap-4 mb-8">
                     <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <i class="fas fa-certificate text-blue-600"></i>
-                        Akreditasi <strong class="text-blue-700 ml-1">{{ \App\Models\Setting::get('school_accreditation', 'A') }}</strong>
+                        <i class="fas fa-certificate text-blue-800"></i>
+                        Akreditasi <strong class="text-blue-800 ml-1">{{ \App\Models\Setting::get('school_accreditation', 'A') }}</strong>
                     </div>
                     <div class="w-px h-5 bg-gray-200"></div>
                     <div class="flex items-center gap-2 text-sm text-gray-500">
-                        <i class="fas fa-id-badge text-blue-600"></i>
+                        <i class="fas fa-id-badge text-blue-800"></i>
                         NPSN <strong class="text-gray-700 ml-1">{{ \App\Models\Setting::get('school_npsn', '-') }}</strong>
                     </div>
                 </div>
@@ -150,19 +171,19 @@
             <div class="grid grid-cols-2 gap-4">
                 @forelse($statistics as $stat)
                 <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 transition-colors">
-                        <i class="{{ $stat->icon ?? 'fas fa-star' }} text-blue-600 group-hover:text-white transition-colors"></i>
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-800 transition-colors">
+                        <i class="{{ $stat->icon ?? 'fas fa-star' }} text-blue-800 group-hover:text-white transition-colors"></i>
                     </div>
-                    <div class="text-3xl font-extrabold text-blue-700 mb-1">{{ $stat->value }}</div>
+                    <div class="text-3xl font-extrabold text-blue-800 mb-1">{{ $stat->value }}</div>
                     <div class="text-sm text-gray-500 font-medium">{{ $stat->label }}</div>
                 </div>
                 @empty
                 @foreach([['fas fa-users','1.200+','Siswa Aktif'],['fas fa-chalkboard-teacher','80+','Guru & Staff'],['fas fa-trophy','150+','Prestasi'],['fas fa-history','25+','Tahun Berdiri']] as [$icon,$val,$label])
                 <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 transition-colors">
-                        <i class="{{ $icon }} text-blue-600 group-hover:text-white transition-colors"></i>
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-800 transition-colors">
+                        <i class="{{ $icon }} text-blue-800 group-hover:text-white transition-colors"></i>
                     </div>
-                    <div class="text-3xl font-extrabold text-blue-700 mb-1">{{ $val }}</div>
+                    <div class="text-3xl font-extrabold text-blue-800 mb-1">{{ $val }}</div>
                     <div class="text-sm text-gray-500 font-medium">{{ $label }}</div>
                 </div>
                 @endforeach
@@ -187,7 +208,7 @@
                         <i class="fas fa-user-tie text-blue-400 text-6xl"></i>
                     </div>
                     @endif
-                    <div class="absolute -bottom-4 -right-4 bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg">
+                    <div class="absolute -bottom-4 -right-4 bg-blue-800 text-white px-4 py-2 rounded-xl shadow-lg">
                         <div class="text-xs">Kepala Sekolah</div>
                         <div class="font-bold text-sm">{{ $sambutanPage->title ?? 'Kepala Sekolah' }}</div>
                     </div>
@@ -195,11 +216,11 @@
             </div>
             {{-- Content --}}
             <div class="order-1 lg:order-2">
-                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                     <i class="fas fa-quote-left"></i> Sambutan Kepala Sekolah
                 </div>
                 <h2 class="text-3xl font-bold text-gray-900 mb-6">Sambutan Kepala Sekolah</h2>
-                <blockquote class="relative pl-6 border-l-4 border-blue-600 mb-6">
+                <blockquote class="relative pl-6 border-l-4 border-blue-800 mb-6">
                     <p class="text-gray-600 leading-relaxed italic">
                         @if($sambutanPage && $sambutanPage->excerpt)
                             {{ $sambutanPage->excerpt }}
@@ -210,7 +231,7 @@
                 </blockquote>
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-blue-600"></i>
+                        <i class="fas fa-user text-blue-800"></i>
                     </div>
                     <div>
                         <div class="font-semibold text-gray-800">{{ $principal->name ?? '-' }}</div>
@@ -250,11 +271,11 @@
                 <div class="p-5">
                     @if($post->category)
                     <a href="{{ route('posts.index', ['category' => $post->category->slug]) }}"
-                       class="inline-flex items-center text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full mb-3 hover:bg-blue-100">
+                       class="inline-flex items-center text-xs font-semibold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full mb-3 hover:bg-blue-100">
                         {{ $post->category->name }}
                     </a>
                     @endif
-                    <h3 class="font-bold text-gray-900 text-base mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
+                    <h3 class="font-bold text-gray-900 text-base mb-2 line-clamp-2 group-hover:text-blue-800 transition-colors">
                         <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
                     </h3>
                     @if($post->excerpt)
@@ -282,7 +303,7 @@
 
 {{-- ===== AGENDA ===== --}}
 @if($agendas->count() > 0)
-<section class="py-20 bg-blue-700 relative overflow-hidden">
+<section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 relative overflow-hidden">
     <div class="absolute inset-0 opacity-10">
         <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full translate-y-1/2 -translate-x-1/2"></div>
@@ -344,7 +365,7 @@
                     </div>
                     <div>
                         <span class="text-xs font-medium px-2 py-0.5 rounded-full
-                            {{ $achievement->level === 'Nasional' ? 'bg-blue-100 text-blue-700' :
+                            {{ $achievement->level === 'Nasional' ? 'bg-blue-100 text-blue-800' :
                                ($achievement->level === 'Internasional' ? 'bg-purple-100 text-purple-700' :
                                ($achievement->level === 'Provinsi' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600')) }}">
                             {{ $achievement->level }}
@@ -443,8 +464,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($services as $service)
             <div class="card p-6 group hover:border-blue-200">
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-                    <i class="{{ $service->icon ?? 'fas fa-concierge-bell' }} text-blue-600 group-hover:text-white transition-colors"></i>
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-800 transition-colors">
+                    <i class="{{ $service->icon ?? 'fas fa-concierge-bell' }} text-blue-800 group-hover:text-white transition-colors"></i>
                 </div>
                 <h3 class="font-bold text-gray-900 mb-2">{{ $service->title }}</h3>
                 <p class="text-gray-500 text-sm line-clamp-3">{{ $service->description }}</p>
@@ -456,7 +477,7 @@
 @endif
 
 {{-- ===== CONTACT CTA ===== --}}
-<section class="py-20 bg-gradient-to-br from-blue-800 to-blue-900 relative overflow-hidden">
+<section class="py-20 bg-gradient-to-br from-blue-800 to-gray-900 relative overflow-hidden">
     <div class="absolute inset-0 opacity-5">
         <div class="absolute top-10 left-10 w-80 h-80 border border-white rounded-full"></div>
         <div class="absolute bottom-10 right-10 w-60 h-60 border border-white rounded-full"></div>

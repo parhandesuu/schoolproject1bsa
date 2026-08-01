@@ -30,8 +30,8 @@
     </div>
     @endif
 
-    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100" x-data="{ open: false }">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <nav class="fixed top-4 left-0 right-0 z-50 mx-4 md:mx-auto max-w-7xl transition-all duration-300" x-data="{ open: false }">
+        <div class="bg-white/85 backdrop-blur-xl shadow-lg shadow-blue-900/5 border border-white/50 rounded-full px-5 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
                     @php 
@@ -43,7 +43,7 @@
                         @if($logo1)
                             <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-10 w-auto">
                         @else
-                            <div class="w-10 h-10 bg-blue-700 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
                         @endif
 
                         @if($logo2)
@@ -52,65 +52,65 @@
                     </div>
 
                     <div class="hidden sm:block leading-tight">
-                        <div class="font-bold text-blue-700 text-sm">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
-                        <div class="text-xs text-gray-500">{{ \App\Models\Setting::get('school_name', 'UPT SMP Negeri 1 Buay Sandang Aji') }}</div>
+                        <div class="font-bold text-blue-800 text-sm">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
+                        <div class="text-xs text-gray-500">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</div>
                     </div>
                 </a>
 
                 <div class="hidden lg:flex items-center space-x-1 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('home') ? 'text-blue-700 bg-blue-50' : 'text-gray-600 hover:text-blue-700 hover:bg-gray-50' }} transition-colors">Beranda</a>
+                    <a href="{{ route('home') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Beranda</a>
 
                     <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3 py-2 rounded-lg {{ request()->routeIs('profile.*') ? 'text-blue-700 bg-blue-50' : 'text-gray-600 hover:text-blue-700 hover:bg-gray-50' }} transition-colors flex items-center gap-1">Profil <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
+                        <button class="px-4 py-2 rounded-full {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors flex items-center gap-1">Profil <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-52 pt-1 z-50">
                             <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('profile.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm transition-colors">Profil Sekolah</a>
-                                <a href="{{ route('profile.history') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm transition-colors">Sejarah</a>
-                                <a href="{{ route('profile.vision-mission') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm transition-colors">Visi & Misi</a>
-                                <a href="{{ route('profile.principal') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm transition-colors">Sambutan Kepsek</a>
-                                <a href="{{ route('profile.organization') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm transition-colors">Struktur Organisasi</a>
+                                <a href="{{ route('profile.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Profil Sekolah</a>
+                                <a href="{{ route('profile.history') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sejarah</a>
+                                <a href="{{ route('profile.vision-mission') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Visi & Misi</a>
+                                <a href="{{ route('profile.principal') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sambutan Kepsek</a>
+                                <a href="{{ route('profile.organization') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Struktur Organisasi</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3 py-2 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-gray-50 transition-colors flex items-center gap-1">Akademik <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
+                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-blue-800 hover:bg-gray-50 transition-colors flex items-center gap-1">Akademik <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1 z-50">
                             <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('teachers.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Guru & Staff</a>
-                                <a href="{{ route('facilities.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Fasilitas</a>
-                                <a href="{{ route('achievements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Prestasi</a>
-                                <a href="{{ route('extracurriculars.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Ekstrakurikuler</a>
+                                <a href="{{ route('teachers.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Guru & Staff</a>
+                                <a href="{{ route('facilities.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Fasilitas</a>
+                                <a href="{{ route('achievements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Prestasi</a>
+                                <a href="{{ route('extracurriculars.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Ekstrakurikuler</a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ route('posts.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('posts.*') ? 'text-blue-700 bg-blue-50' : 'text-gray-600 hover:text-blue-700 hover:bg-gray-50' }} transition-colors">Berita</a>
+                    <a href="{{ route('posts.index') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Berita</a>
 
                     <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3 py-2 rounded-lg text-gray-600 hover:text-blue-700 hover:bg-gray-50 transition-colors flex items-center gap-1">Informasi <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
+                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-blue-800 hover:bg-gray-50 transition-colors flex items-center gap-1">Informasi <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1 z-50">
                             <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('agendas.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Agenda</a>
-                                <a href="{{ route('announcements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Pengumuman</a>
-                                <a href="{{ route('gallery.photos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Galeri Foto</a>
-                                <a href="{{ route('gallery.videos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Galeri Video</a>
-                                <a href="{{ route('documents.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 text-sm">Download</a>
+                                <a href="{{ route('agendas.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Agenda</a>
+                                <a href="{{ route('announcements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Pengumuman</a>
+                                <a href="{{ route('gallery.photos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Galeri Foto</a>
+                                <a href="{{ route('gallery.videos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Galeri Video</a>
+                                <a href="{{ route('documents.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Download</a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ route('services.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('services.*') ? 'text-blue-700 bg-blue-50' : 'text-gray-600 hover:text-blue-700 hover:bg-gray-50' }} transition-colors">Layanan</a>
-                    <a href="{{ route('contact.index') }}" class="ml-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
+                    <a href="{{ route('services.index') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Layanan</a>
+                    <a href="{{ route('contact.index') }}" class="ml-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
                 </div>
 
-                <button @click="open = !open" class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                <button @click="open = !open" class="lg:hidden p-2 rounded-full text-gray-600 hover:bg-gray-100">
                     <i class="fas text-xl" :class="open ? 'fa-times' : 'fa-bars'"></i>
                 </button>
             </div>
         </div>
 
-        <div x-show="open" x-transition class="lg:hidden border-t border-gray-100 bg-white max-h-[80vh] overflow-y-auto">
+        <div x-show="open" x-transition class="lg:hidden mt-4 border border-gray-100 rounded-3xl bg-white/95 backdrop-blur-xl shadow-xl max-h-[80vh] overflow-y-auto">
             <div class="px-4 py-3 space-y-1 text-sm">
                 <a href="{{ route('home') }}" class="block px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50 font-medium">Beranda</a>
                 <p class="px-3 pt-3 pb-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Profil</p>
@@ -132,12 +132,12 @@
                 <a href="{{ route('gallery.videos') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Galeri Video</a>
                 <a href="{{ route('documents.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Download</a>
                 <a href="{{ route('services.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Layanan</a>
-                <a href="{{ route('contact.index') }}" class="block px-3 py-2.5 rounded-lg text-white bg-blue-700 font-medium text-center mt-2">Kontak</a>
+                <a href="{{ route('contact.index') }}" class="block px-3 py-2.5 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-800 font-medium text-center mt-2">Kontak</a>
             </div>
         </div>
     </nav>
 
-    <main>@yield('content')</main>
+    <main class="{{ request()->routeIs('home') ? '' : 'pt-32' }}">@yield('content')</main>
 
     <footer class="bg-gray-900 text-white mt-0">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">

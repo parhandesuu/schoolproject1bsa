@@ -18,6 +18,9 @@ export default {
             },
             colors: {
                 primary: {
+                    DEFAULT: '#1E40AF',
+                    light: '#3B82F6',
+                    dark: '#1E3A8A',
                     50: '#eff6ff',
                     100: '#dbeafe',
                     500: '#3b82f6',
@@ -25,6 +28,15 @@ export default {
                     700: '#1d4ed8',
                     800: '#1e40af',
                     900: '#1e3a8a',
+                },
+                secondary: {
+                    DEFAULT: '#F97316',
+                    light: '#FDBA74',
+                    dark: '#C2410C',
+                    50: '#fff7ed',
+                    100: '#ffedd5',
+                    500: '#f97316',
+                    600: '#ea580c',
                 },
             },
             animation: {
