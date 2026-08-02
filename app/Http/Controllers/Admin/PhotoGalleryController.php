@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoGalleryController extends Controller
 {
-    public function index(PhotoAlbum $album)
+    public function index(PhotoAlbum $photoAlbum)
     {
-        $photos = $album->photos()->latest()->paginate(24);
-        return view('admin.photo-galleries.index', compact('album', 'photos'));
+        return redirect()->route('admin.photo-albums.show', $photoAlbum->id);
     }
 
-    public function store(Request $request, PhotoAlbum $album)
+    public function store(Request $request, PhotoAlbum $photoAlbum)
     {
+        $album = $photoAlbum;
         $request->validate([
             'images'   => 'required|array|min:1',
             'images.*' => 'required|file|mimes:jpg,jpeg,png,webp|max:2048',
@@ -33,7 +33,7 @@ class PhotoGalleryController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.photo-albums.photos.index', $album->id)
+        return redirect()->route('admin.photo-albums.show', $album->id)
                          ->with('success', 'Photos uploaded successfully.');
     }
 
@@ -45,7 +45,7 @@ class PhotoGalleryController extends Controller
         $albumId = $photo->photo_album_id;
         $photo->delete();
 
-        return redirect()->route('admin.photo-albums.photos.index', $albumId)
+        return redirect()->route('admin.photo-albums.show', $albumId)
                          ->with('success', 'Photo deleted successfully.');
     }
 }

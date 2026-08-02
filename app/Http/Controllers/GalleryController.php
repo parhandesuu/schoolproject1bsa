@@ -38,7 +38,9 @@ class GalleryController extends Controller
             $query->orderBy('order');
         }]);
 
-        return view('gallery.album', compact('album'));
+        $photos = $album->photos;
+
+        return view('gallery.album', compact('album', 'photos'));
     }
 
     /**

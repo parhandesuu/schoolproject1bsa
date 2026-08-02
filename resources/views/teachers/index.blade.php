@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('title', 'Guru & Staff')
 @section('content')
-<div class="bg-gradient-to-r from-blue-800 to-blue-900 py-16">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <h1 class="text-4xl font-bold text-white mb-2">Guru & Staff</h1>
-        <nav class="text-white/60 text-sm"><a href="{{ route('home') }}" class="hover:text-white">Beranda</a> / Guru & Staff</nav>
+<div class="container mx-auto px-4 max-w-7xl pt-8 pb-16" x-data="{ tab: 'guru' }">
+    <div class="mb-8">
+        <nav class="text-xs md:text-sm text-gray-500 mb-2">
+            <a href="{{ route('home') }}" class="hover:text-blue-700">Beranda</a> <span class="mx-1 text-gray-400">/</span>
+            <span class="text-gray-700 font-medium">Guru & Staff</span>
+        </nav>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight">Guru & Staff</h1>
     </div>
-</div>
-
-<div class="container mx-auto px-4 max-w-7xl py-16" x-data="{ tab: 'guru' }">
     {{-- Tabs --}}
     <div class="flex gap-2 mb-10">
         <button @click="tab='guru'" :class="tab==='guru' ? 'bg-blue-700 text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'"

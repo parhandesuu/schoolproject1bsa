@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('title', 'Layanan Sekolah')
 @section('content')
-<div class="bg-gradient-to-r from-blue-800 to-blue-900 py-16">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <h1 class="text-4xl font-bold text-white mb-2">Layanan Sekolah</h1>
-        <nav class="text-white/60 text-sm"><a href="{{ route('home') }}" class="hover:text-white">Beranda</a> / Layanan</nav>
+<div class="container mx-auto px-4 max-w-7xl pt-8 pb-16">
+    <div class="mb-8">
+        <nav class="text-xs md:text-sm text-gray-500 mb-2">
+            <a href="{{ route('home') }}" class="hover:text-blue-700">Beranda</a> <span class="mx-1 text-gray-400">/</span>
+            <span class="text-gray-700 font-medium">Layanan Sekolah</span>
+        </nav>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight">Layanan Sekolah</h1>
     </div>
-</div>
-<div class="container mx-auto px-4 max-w-7xl py-16">
     @if($services->count() > 0)
     <div class="space-y-4" x-data="{ open: null }">
         @foreach($services as $i => $service)

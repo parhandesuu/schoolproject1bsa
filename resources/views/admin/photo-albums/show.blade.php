@@ -10,7 +10,7 @@
 {{-- Upload form --}}
 <div class="admin-card mb-6">
     <h3 class="font-semibold text-gray-900 mb-4">Upload Foto</h3>
-    <form action="{{ route('admin.photo-galleries.store', $album) }}" method="POST" enctype="multipart/form-data" class="flex items-end gap-4">
+    <form action="{{ route('admin.photo-albums.photos.store', $album) }}" method="POST" enctype="multipart/form-data" class="flex items-end gap-4">
         @csrf
         <div class="flex-1">
             <label class="form-label">Pilih Foto (bisa multiple)</label>
@@ -21,11 +21,11 @@
 </div>
 {{-- Photos grid --}}
 <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-    @forelse($photos as $photo)
+    @forelse($album->photos as $photo)
     <div class="relative group aspect-square rounded-xl overflow-hidden bg-gray-100">
         <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->caption }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-end justify-end p-2 transition-all">
-            <form action="{{ route('admin.photo-galleries.destroy', $photo) }}" method="POST" class="opacity-0 group-hover:opacity-100">
+            <form action="{{ route('admin.photos.destroy', $photo) }}" method="POST" class="opacity-0 group-hover:opacity-100">
                 @csrf @method('DELETE')
                 <button type="submit" onclick="return confirm('Hapus foto?')" class="w-7 h-7 bg-red-500 hover:bg-red-600 text-white rounded-lg flex items-center justify-center text-xs"><i class="fas fa-times"></i></button>
             </form>

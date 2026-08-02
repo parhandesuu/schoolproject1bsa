@@ -44,12 +44,12 @@ class PhotoAlbumController extends Controller
 
     public function show(PhotoAlbum $photoAlbum)
     {
-        return view('admin.photo-albums.show', compact('photoAlbum'));
+        return view('admin.photo-albums.show', ['album' => $photoAlbum]);
     }
 
     public function edit(PhotoAlbum $photoAlbum)
     {
-        return view('admin.photo-albums.edit', compact('photoAlbum'));
+        return view('admin.photo-albums.edit', ['album' => $photoAlbum]);
     }
 
     public function update(Request $request, PhotoAlbum $photoAlbum)

@@ -10,7 +10,7 @@ class CommentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Comment::with('post', 'user');
+        $query = Comment::with('post');
 
         if ($status = $request->input('status')) {
             $query->where('status', $status);
@@ -20,7 +20,7 @@ class CommentController extends Controller
             $query->whereHas('post', function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%");
             })->orWhere('content', 'like', "%{$search}%")
-              ->orWhere('author_name', 'like', "%{$search}%");
+              ->orWhere('name', 'like', "%{$search}%");
         }
 
         $comments = $query->latest()->paginate(15)->withQueryString();
