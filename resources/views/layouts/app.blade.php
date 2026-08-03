@@ -15,6 +15,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
@@ -22,7 +26,7 @@
 
     @php $pinnedAnnouncement = \App\Models\Announcement::active()->where('is_pinned', true)->first(); @endphp
     @if($pinnedAnnouncement)
-    <div class="bg-blue-700 text-white text-sm py-2 px-4 text-center" x-data="{ show: true }" x-show="show">
+    <div class="bg-blue-700 text-white text-sm py-2 px-4 text-center" x-data="{ show: true }" x-show="show" x-cloak>
         <div class="container mx-auto flex items-center justify-between max-w-7xl">
             <span class="flex-1 text-center"><i class="fas fa-bullhorn mr-2"></i><strong>{{ $pinnedAnnouncement->title }}</strong></span>
             <button @click="show = false" class="ml-4 text-white/80 hover:text-white"><i class="fas fa-times"></i></button>
@@ -60,12 +64,12 @@
                 <div class="hidden lg:flex items-center gap-1 xl:gap-1.5 text-sm font-medium">
                     <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Beranda</a>
 
-                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
+                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Profil</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-52 pt-1.5 z-50">
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute top-full left-0 w-52 pt-1.5 z-50">
                             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
                                 <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Profil Sekolah</a>
                                 <a href="{{ route('profile.history') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sejarah</a>
@@ -76,12 +80,12 @@
                         </div>
                     </div>
 
-                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('teachers.*', 'facilities.*', 'achievements.*', 'extracurriculars.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
+                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('teachers.*', 'facilities.*', 'achievements.*', 'extracurriculars.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Akademik</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1.5 z-50">
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute top-full left-0 w-48 pt-1.5 z-50">
                             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
                                 <a href="{{ route('teachers.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Guru & Staff</a>
                                 <a href="{{ route('facilities.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Fasilitas</a>
@@ -93,12 +97,12 @@
 
                     <a href="{{ route('posts.index') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Berita</a>
 
-                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('agendas.*', 'announcements.*', 'gallery.*', 'documents.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
+                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('agendas.*', 'announcements.*', 'gallery.*', 'documents.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Informasi</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1.5 z-50">
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute top-full left-0 w-48 pt-1.5 z-50">
                             <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
                                 <a href="{{ route('agendas.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Agenda</a>
                                 <a href="{{ route('announcements.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Pengumuman</a>
@@ -119,7 +123,7 @@
             </div>
         </div>
 
-        <div x-show="open" x-transition class="lg:hidden mt-4 border border-gray-100 rounded-3xl bg-white/95 backdrop-blur-xl shadow-xl max-h-[80vh] overflow-y-auto">
+        <div x-show="open" x-cloak x-transition class="lg:hidden mt-4 border border-gray-100 rounded-3xl bg-white/95 backdrop-blur-xl shadow-xl max-h-[80vh] overflow-y-auto">
             <div class="px-4 py-3 space-y-1 text-sm">
                 <a href="{{ route('home') }}" class="block px-3 py-2.5 rounded-lg text-gray-700 hover:bg-blue-50 font-medium">Beranda</a>
                 <p class="px-3 pt-3 pb-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Profil</p>
