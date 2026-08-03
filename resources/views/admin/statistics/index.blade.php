@@ -20,5 +20,11 @@
         <td class="px-5 py-3.5 text-center"><div class="flex items-center justify-center gap-2"><a href="{{ route('admin.statistics.edit', $s) }}" class="icon-btn-blue"><i class="fas fa-pencil-alt"></i></a><form action="{{ route('admin.statistics.destroy', $s) }}" method="POST" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button type="submit" class="icon-btn-red"><i class="fas fa-trash"></i></button></form></div></td>
     </tr>
     @empty<tr><td colspan="6" class="text-center py-12 text-gray-400">Belum ada statistik</td></tr>@endforelse
-</tbody></table></div>
+</tbody></table>
+@if($statistics->hasPages())
+    <div class="px-5 py-4 border-t border-gray-100 bg-white">
+        {{ $statistics->links() }}
+    </div>
+@endif
+</div>
 @endsection

@@ -30,11 +30,6 @@ class HomeController extends Controller
             ->orderBy('order')
             ->get();
 
-        // Logos - active only
-        $logos = Logo::where('is_active', true)
-            ->orderBy('order')
-            ->get();
-
         // Pages for profil and sambutan sections
         $profilePage = Page::where('slug', 'profil')
             ->where('is_active', true)
@@ -116,7 +111,6 @@ class HomeController extends Controller
 
         return view('home.index', compact(
             'hero_sliders',
-            'logos',
             'profilePage',
             'sambutanPage',
             'principal',

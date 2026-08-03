@@ -119,21 +119,6 @@
 </section>
 @endif
 
-{{-- ===== LOGO STRIP ===== --}}
-@if($logos->count() > 0)
-<section class="bg-white border-b border-gray-100 py-8">
-    <div class="container mx-auto px-4 max-w-7xl">
-        <p class="text-center text-xs font-semibold text-gray-400 uppercase tracking-widest mb-6">Bermitra Dengan</p>
-        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            @foreach($logos as $logo)
-            <img src="{{ asset('storage/'.$logo->image) }}" alt="{{ $logo->name }}"
-                 class="h-10 md:h-14 w-auto object-contain opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
 {{-- ===== ABOUT SCHOOL ===== --}}
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">

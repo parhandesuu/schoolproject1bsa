@@ -43,9 +43,6 @@
             <a href="{{ route('admin.hero-sliders.index') }}" class="sidebar-link {{ request()->routeIs('admin.hero-sliders.*') ? 'active' : '' }}">
                 <i class="fas fa-images icon"></i><span>Hero Slider</span>
             </a>
-            <a href="{{ route('admin.logos.index') }}" class="sidebar-link {{ request()->routeIs('admin.logos.*') ? 'active' : '' }}">
-                <i class="fas fa-medal icon"></i><span>Logo</span>
-            </a>
 
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Profil Sekolah</p>
             <a href="{{ route('admin.pages.index') }}" class="sidebar-link {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">

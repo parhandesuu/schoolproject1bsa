@@ -20,5 +20,11 @@
         <td class="px-5 py-3.5 text-center"><div class="flex items-center justify-center gap-2"><a href="{{ route('admin.extracurriculars.edit', $e) }}" class="icon-btn-blue"><i class="fas fa-pencil-alt"></i></a><form action="{{ route('admin.extracurriculars.destroy', $e) }}" method="POST" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button type="submit" class="icon-btn-red"><i class="fas fa-trash"></i></button></form></div></td>
     </tr>
     @empty<tr><td colspan="6" class="text-center py-12 text-gray-400">Belum ada data</td></tr>@endforelse
-</tbody></table></div>
+</tbody></table>
+@if($extracurriculars->hasPages())
+    <div class="px-5 py-4 border-t border-gray-100 bg-white">
+        {{ $extracurriculars->links() }}
+    </div>
+@endif
+</div>
 @endsection

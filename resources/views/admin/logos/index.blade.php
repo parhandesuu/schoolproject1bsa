@@ -18,5 +18,11 @@
         <td class="px-5 py-3.5 text-center"><div class="flex items-center justify-center gap-2"><a href="{{ route('admin.logos.edit', $logo) }}" class="icon-btn-blue"><i class="fas fa-pencil-alt"></i></a><form action="{{ route('admin.logos.destroy', $logo) }}" method="POST" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button type="submit" class="icon-btn-red"><i class="fas fa-trash"></i></button></form></div></td>
     </tr>
     @empty<tr><td colspan="5" class="text-center py-12 text-gray-400">Belum ada logo</td></tr>@endforelse
-</tbody></table></div>
+</tbody></table>
+@if($logos->hasPages())
+    <div class="px-5 py-4 border-t border-gray-100 bg-white">
+        {{ $logos->links() }}
+    </div>
+@endif
+</div>
 @endsection

@@ -16,5 +16,11 @@
         <td class="px-5 py-3.5 text-center"><div class="flex items-center justify-center gap-2"><a href="{{ route('admin.services.edit', $s) }}" class="icon-btn-blue"><i class="fas fa-pencil-alt"></i></a><form action="{{ route('admin.services.destroy', $s) }}" method="POST" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button type="submit" class="icon-btn-red"><i class="fas fa-trash"></i></button></form></div></td>
     </tr>
     @empty<tr><td colspan="4" class="text-center py-12 text-gray-400">Belum ada layanan</td></tr>@endforelse
-</tbody></table></div>
+</tbody></table>
+@if($services->hasPages())
+    <div class="px-5 py-4 border-t border-gray-100 bg-white">
+        {{ $services->links() }}
+    </div>
+@endif
+</div>
 @endsection

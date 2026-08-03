@@ -42,5 +42,10 @@
             @endforelse
         </tbody>
     </table>
+    @if($categories->hasPages())
+        <div class="px-5 py-4 border-t border-gray-100 bg-white">
+            {{ $categories->links() }}
+        </div>
+    @endif
 </div>
 @endsection
