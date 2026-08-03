@@ -57,51 +57,60 @@
                     </div>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-1 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Beranda</a>
+                <div class="hidden lg:flex items-center gap-1 xl:gap-1.5 text-sm font-medium">
+                    <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Beranda</a>
 
                     <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-4 py-2 rounded-full {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors flex items-center gap-1">Profil <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-52 pt-1 z-50">
-                            <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('profile.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Profil Sekolah</a>
-                                <a href="{{ route('profile.history') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sejarah</a>
-                                <a href="{{ route('profile.vision-mission') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Visi & Misi</a>
-                                <a href="{{ route('profile.principal') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sambutan Kepsek</a>
-                                <a href="{{ route('profile.organization') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Struktur Organisasi</a>
+                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                            <span>Profil</span>
+                            <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-52 pt-1.5 z-50">
+                            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
+                                <a href="{{ route('profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Profil Sekolah</a>
+                                <a href="{{ route('profile.history') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sejarah</a>
+                                <a href="{{ route('profile.vision-mission') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Visi & Misi</a>
+                                <a href="{{ route('profile.principal') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Sambutan Kepsek</a>
+                                <a href="{{ route('profile.organization') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Struktur Organisasi</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-blue-800 hover:bg-gray-50 transition-colors flex items-center gap-1">Akademik <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1 z-50">
-                            <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('teachers.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Guru & Staff</a>
-                                <a href="{{ route('facilities.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Fasilitas</a>
-                                <a href="{{ route('achievements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Prestasi</a>
-                                <a href="{{ route('extracurriculars.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Ekstrakurikuler</a>
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
+                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('teachers.*', 'facilities.*', 'achievements.*', 'extracurriculars.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                            <span>Akademik</span>
+                            <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1.5 z-50">
+                            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
+                                <a href="{{ route('teachers.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Guru & Staff</a>
+                                <a href="{{ route('facilities.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Fasilitas</a>
+                                <a href="{{ route('achievements.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Prestasi</a>
+                                <a href="{{ route('extracurriculars.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Ekstrakurikuler</a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ route('posts.index') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Berita</a>
+                    <a href="{{ route('posts.index') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Berita</a>
 
-                    <div class="relative" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
-                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-blue-800 hover:bg-gray-50 transition-colors flex items-center gap-1">Informasi <i class="fas fa-chevron-down text-xs opacity-60"></i></button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1 z-50">
-                            <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-2">
-                                <a href="{{ route('agendas.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Agenda</a>
-                                <a href="{{ route('announcements.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Pengumuman</a>
-                                <a href="{{ route('gallery.photos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Galeri Foto</a>
-                                <a href="{{ route('gallery.videos') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Galeri Video</a>
-                                <a href="{{ route('documents.index') }}" class="block px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm">Download</a>
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false">
+                        <button class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('agendas.*', 'announcements.*', 'gallery.*', 'documents.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                            <span>Informasi</span>
+                            <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="absolute top-full left-0 w-48 pt-1.5 z-50">
+                            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 py-2">
+                                <a href="{{ route('agendas.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Agenda</a>
+                                <a href="{{ route('announcements.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Pengumuman</a>
+                                <a href="{{ route('gallery.photos') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Galeri Foto</a>
+                                <a href="{{ route('gallery.videos') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Galeri Video</a>
+                                <a href="{{ route('documents.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Download</a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ route('services.index') }}" class="px-4 py-2 rounded-full {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }} transition-colors">Layanan</a>
-                    <a href="{{ route('contact.index') }}" class="ml-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
+                    <a href="{{ route('services.index') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Layanan</a>
+                    <a href="{{ route('contact.index') }}" class="ml-1 px-5 py-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-medium inline-flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
                 </div>
 
                 <button @click="open = !open" class="lg:hidden p-2 rounded-full text-gray-600 hover:bg-gray-100">

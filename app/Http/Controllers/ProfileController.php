@@ -70,6 +70,12 @@ class ProfileController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        return view('profile.organization', compact('page'));
+        $principal = Teacher::where('is_active', true)
+            ->where('position', 'like', '%Kepala%')
+            ->first();
+
+        $staff = Teacher::where('is_active', true)->get();
+
+        return view('profile.organization', compact('page', 'principal', 'staff'));
     }
 }

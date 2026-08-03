@@ -177,12 +177,6 @@ class SampleDataSeeder extends Seeder
 
     private function seedServices(): void
     {
-        $services = [
-            ['title' => 'PPDB Online', 'description' => 'Pendaftaran Peserta Didik Baru secara online.', 'content' => '<h3>Prosedur PPDB Online</h3><ol><li>Akses portal PPDB di ppdb.sman1nusantara.sch.id</li><li>Daftarkan akun dengan nomor KK</li><li>Isi formulir pendaftaran</li><li>Upload dokumen persyaratan</li><li>Cetak bukti pendaftaran</li></ol>', 'icon' => 'fas fa-graduation-cap', 'order' => 1],
-            ['title' => 'Surat Keterangan Siswa', 'description' => 'Layanan pembuatan surat keterangan masih aktif sebagai siswa.', 'content' => '<h3>Cara Mengajukan Surat Keterangan</h3><ol><li>Datang ke ruang Tata Usaha</li><li>Isi formulir permohonan</li><li>Tunggu proses 1x24 jam kerja</li><li>Ambil surat yang telah ditandatangani</li></ol>', 'icon' => 'fas fa-file-alt', 'order' => 2],
-            ['title' => 'Konseling Siswa', 'description' => 'Layanan bimbingan dan konseling untuk mendukung perkembangan siswa.', 'content' => '<h3>Layanan BK</h3><p>Bimbingan Konseling tersedia setiap hari kerja pukul 08:00-14:00 di ruang BK lantai 1.</p>', 'icon' => 'fas fa-hands-helping', 'order' => 3],
-            ['title' => 'Pembayaran SPP Online', 'description' => 'Pembayaran SPP dan biaya sekolah melalui berbagai metode pembayaran.', 'content' => '<h3>Metode Pembayaran</h3><ul><li>Transfer Bank BRI/BNI/Mandiri</li><li>Virtual Account</li><li>GoPay / OVO / Dana</li></ul>', 'icon' => 'fas fa-credit-card', 'order' => 4],
-        ];
-        foreach ($services as $s) { Service::updateOrCreate(['title' => $s['title']], $s + ['is_active' => true, 'image' => null]); }
+        $this->call(ServiceSeeder::class);
     }
 }

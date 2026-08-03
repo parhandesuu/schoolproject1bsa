@@ -200,7 +200,10 @@
             {{-- Photo --}}
             <div class="order-2 lg:order-1 flex justify-center">
                 <div class="relative">
-                    @if($sambutanPage && $sambutanPage->image)
+                    @if($principal && $principal->photo)
+                    <img src="{{ asset('storage/'.$principal->photo) }}" alt="{{ $principal->name }}"
+                         class="w-72 h-80 object-cover rounded-2xl shadow-xl">
+                    @elseif($sambutanPage && $sambutanPage->image)
                     <img src="{{ asset('storage/'.$sambutanPage->image) }}" alt="{{ $sambutanPage->title }}"
                          class="w-72 h-80 object-cover rounded-2xl shadow-xl">
                     @else
@@ -210,7 +213,7 @@
                     @endif
                     <div class="absolute -bottom-4 -right-4 bg-blue-800 text-white px-4 py-2 rounded-xl shadow-lg">
                         <div class="text-xs">Kepala Sekolah</div>
-                        <div class="font-bold text-sm">{{ $sambutanPage->title ?? 'Kepala Sekolah' }}</div>
+                        <div class="font-bold text-sm">{{ $principal->name ?? ($sambutanPage->title ?? 'Kepala Sekolah') }}</div>
                     </div>
                 </div>
             </div>
@@ -230,12 +233,16 @@
                     </p>
                 </blockquote>
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center overflow-hidden">
+                        @if($principal && $principal->photo)
+                        <img src="{{ asset('storage/'.$principal->photo) }}" alt="{{ $principal->name }}" class="w-full h-full object-cover">
+                        @else
                         <i class="fas fa-user text-blue-800"></i>
+                        @endif
                     </div>
                     <div>
-                        <div class="font-semibold text-gray-800">{{ $principal->name ?? '-' }}</div>
-                        <div class="text-sm text-gray-500">Kepala Sekolah</div>
+                        <div class="font-semibold text-gray-800">{{ $principal->name ?? 'Kepala Sekolah' }}</div>
+                        <div class="text-sm text-gray-500">{{ $principal->position ?? 'Kepala Sekolah' }}</div>
                     </div>
                 </div>
                 <a href="{{ route('profile.principal') }}" class="btn-outline">Baca Selengkapnya <i class="fas fa-arrow-right text-sm"></i></a>
@@ -396,21 +403,24 @@
             <h2 class="section-title">Ekstrakurikuler</h2>
             <p class="section-subtitle">Berbagai kegiatan pengembangan diri di luar jam pelajaran</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10">
             @foreach($extracurriculars as $ekskul)
-            <div class="text-center group">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden bg-blue-50 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+            <a href="{{ route('extracurriculars.index') }}" class="block p-4 rounded-2xl bg-gray-50/60 hover:bg-white border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 text-center group">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden bg-gradient-to-br {{ $ekskul->icon_theme['bg'] }} flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:shadow transition-all duration-300">
                     @if($ekskul->image)
                     <img src="{{ asset('storage/'.$ekskul->image) }}" alt="{{ $ekskul->name }}" class="w-full h-full object-cover">
                     @else
-                    <i class="fas fa-running text-blue-500 text-2xl"></i>
+                    <i class="{{ $ekskul->icon }} {{ $ekskul->icon_theme['text'] }} text-2xl"></i>
                     @endif
                 </div>
-                <div class="font-semibold text-gray-800 text-sm">{{ $ekskul->name }}</div>
+                <div class="font-bold text-gray-800 group-hover:text-blue-700 text-sm transition-colors line-clamp-2">{{ $ekskul->name }}</div>
                 @if($ekskul->schedule)
-                <div class="text-xs text-gray-400 mt-0.5">{{ $ekskul->schedule }}</div>
+                <div class="text-xs text-gray-400 mt-1 flex items-center justify-center gap-1">
+                    <i class="fas fa-clock text-[10px]"></i>
+                    <span>{{ $ekskul->schedule }}</span>
+                </div>
                 @endif
-            </div>
+            </a>
             @endforeach
         </div>
         <div class="text-center">
@@ -429,20 +439,34 @@
             <h2 class="section-title">Galeri Foto</h2>
             <p class="section-subtitle">Momen dan kenangan indah kegiatan sekolah</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-            @foreach($photo_albums->take(6) as $album)
-                @if($album->firstPhoto)
-                <a href="{{ route('gallery.album', $album) }}" class="group relative aspect-square rounded-2xl overflow-hidden block">
-                    <img src="{{ asset('storage/'.$album->firstPhoto->image) }}" alt="{{ $album->name }}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gray-900/0 group-hover:bg-gray-900/50 transition-all duration-300 flex items-end">
-                        <div class="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div class="font-semibold text-sm">{{ $album->name }}</div>
-                            <div class="text-xs opacity-75"><i class="fas fa-images mr-1"></i>{{ $album->photos_count ?? 0 }} foto</div>
+        <div class="flex flex-wrap justify-center gap-6 mb-10">
+            @foreach($photo_albums as $album)
+            <div class="w-full {{ $photo_albums->count() == 1 ? 'max-w-md' : ($photo_albums->count() == 2 ? 'sm:max-w-md md:w-[calc(50%-12px)]' : 'sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]') }}">
+                <a href="{{ route('gallery.album', $album) }}" class="card group block overflow-hidden">
+                    <div class="aspect-video overflow-hidden bg-gray-100 relative">
+                        @if($album->cover)
+                        <img src="{{ asset('storage/'.$album->cover) }}" alt="{{ $album->name }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @elseif($album->photos && $album->photos->isNotEmpty())
+                        <img src="{{ asset('storage/'.$album->photos->first()->image) }}" alt="{{ $album->name }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        @else
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+                            <i class="fas fa-images text-blue-300 text-5xl"></i>
+                        </div>
+                        @endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent flex items-end">
+                            <div class="p-5 w-full">
+                                <h3 class="font-bold text-white text-lg drop-shadow-sm group-hover:text-blue-200 transition-colors">{{ $album->name }}</h3>
+                                <div class="text-white/80 text-sm mt-1 flex items-center gap-1.5">
+                                    <i class="fas fa-images"></i>
+                                    <span>{{ $album->photos_count ?? ($album->photos ? $album->photos->count() : 0) }} foto</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>
-                @endif
+            </div>
             @endforeach
         </div>
         <div class="text-center">
@@ -463,14 +487,26 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($services as $service)
-            <div class="card p-6 group hover:border-blue-200">
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-800 transition-colors">
-                    <i class="{{ $service->icon ?? 'fas fa-concierge-bell' }} text-blue-800 group-hover:text-white transition-colors"></i>
+            <a href="{{ route('services.index') }}#service-{{ $service->id }}" class="card p-6 group hover:border-blue-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between block bg-white rounded-2xl border border-gray-100">
+                <div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-800 transition-colors">
+                        <i class="{{ $service->icon ?? 'fas fa-concierge-bell' }} text-blue-800 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2 group-hover:text-blue-800 transition-colors">{{ $service->title }}</h3>
+                    <p class="text-gray-500 text-sm line-clamp-3 leading-relaxed">{{ $service->description }}</p>
                 </div>
-                <h3 class="font-bold text-gray-900 mb-2">{{ $service->title }}</h3>
-                <p class="text-gray-500 text-sm line-clamp-3">{{ $service->description }}</p>
-            </div>
+                <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-semibold text-blue-700 group-hover:text-blue-800">
+                    <span>Lihat Rincian Layanan</span>
+                    <i class="fas fa-arrow-right transform group-hover:translate-x-1.5 transition-transform duration-200"></i>
+                </div>
+            </a>
             @endforeach
+        </div>
+        <div class="text-center mt-10">
+            <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 font-semibold text-blue-800 hover:text-white bg-blue-50 hover:bg-blue-800 px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md">
+                <span>Lihat Semua Layanan ({{ \App\Models\Service::where('is_active', true)->count() }})</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+            </a>
         </div>
     </div>
 </section>

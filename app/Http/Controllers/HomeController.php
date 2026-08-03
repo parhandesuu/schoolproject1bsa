@@ -14,6 +14,7 @@ use App\Models\Post;
 use App\Models\Service;
 use App\Models\SocialMedia;
 use App\Models\Statistic;
+use App\Models\Teacher;
 use App\Models\VideoGallery;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,11 @@ class HomeController extends Controller
 
         $sambutanPage = Page::where('slug', 'sambutan-kepala-sekolah')
             ->where('is_active', true)
+            ->first();
+
+        // Principal (Kepala Sekolah) from Teacher data
+        $principal = Teacher::where('is_active', true)
+            ->where('position', 'like', '%Kepala%')
             ->first();
 
         // Statistics - active only
@@ -81,14 +87,14 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        // Photo albums - active, 3, with first photo eager loaded
+        // Photo albums - active, 6, with first photo eager loaded
         $photo_albums = PhotoAlbum::where('is_active', true)
             ->with(['photos' => function ($query) {
-                $query->orderBy('order')->take(1);
+                $query->orderBy('order');
             }])
             ->withCount('photos')
             ->latest()
-            ->take(3)
+            ->take(6)
             ->get();
 
         // Video galleries - active, 3
@@ -113,6 +119,7 @@ class HomeController extends Controller
             'logos',
             'profilePage',
             'sambutanPage',
+            'principal',
             'statistics',
             'posts',
             'agendas',
