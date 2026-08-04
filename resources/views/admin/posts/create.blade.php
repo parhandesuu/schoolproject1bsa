@@ -11,8 +11,24 @@
     <a href="{{ route('admin.posts.index') }}" class="w-9 h-9 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
         <i class="fas fa-arrow-left text-gray-600"></i>
     </a>
-    <h2 class="text-xl font-bold text-gray-900">{{ isset($post) ? 'Edit Berita' : 'Tambah Berita Baru' }}</h2>
+    <div>
+        <h2 class="text-xl font-bold text-gray-900">{{ isset($post) ? 'Edit Berita' : 'Tambah Berita Baru' }}</h2>
+        <p class="text-xs text-gray-500 mt-0.5">Lengkapi formulir di bawah ini untuk membuat atau memperbarui artikel berita.</p>
+    </div>
 </div>
+
+@if(isset($post) && $post->status === 'rejected')
+<div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
+    <div class="flex items-start gap-3">
+        <i class="fas fa-exclamation-triangle text-red-500 text-lg mt-0.5"></i>
+        <div>
+            <h4 class="text-sm font-bold text-red-800">Artikel Ini Ditolak / Memerlukan Revisi</h4>
+            <p class="text-xs text-red-700 mt-1"><strong>Alasan / Catatan Editor:</strong> {{ $post->rejection_note ?? 'Silakan sesuaikan isi artikel sebelum mengajukan kembali.' }}</p>
+            <p class="text-xs text-red-600 mt-1">Setelah diperbaiki, ubah status menjadi <strong>"Ajukan Review (Menunggu Persetujuan)"</strong> lalu simpan.</p>
+        </div>
+    </div>
+</div>
+@endif
 
 <form action="{{ isset($post) ? route('admin.posts.update', $post) : route('admin.posts.store') }}"
       method="POST" enctype="multipart/form-data">
@@ -64,13 +80,13 @@
         {{-- Sidebar --}}
         <div class="lg:col-span-1 space-y-5">
             <div class="admin-card">
-                <label class="form-label">Thumbnail <span class="text-red-500">*</span></label>
+                <label class="form-label">Thumbnail @if(!isset($post))<span class="text-red-500">*</span>@endif</label>
                 @if(isset($post) && $post->thumbnail)
                 <img src="{{ asset('storage/'.$post->thumbnail) }}" class="w-full rounded-xl mb-3 object-cover h-36" id="thumb-preview">
                 @else
                 <img id="thumb-preview" class="w-full rounded-xl mb-3 object-cover h-36 hidden">
                 @endif
-                <input type="file" name="thumbnail" accept="image/*" class="input-field"
+                <input type="file" name="thumbnail" accept="image/*" class="input-field" {{ !isset($post) ? 'required' : '' }}
                        onchange="document.getElementById('thumb-preview').src=URL.createObjectURL(this.files[0]); document.getElementById('thumb-preview').classList.remove('hidden')">
                 @error('thumbnail')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
@@ -86,11 +102,20 @@
                     </select>
                 </div>
                 <div>
-                    <label class="form-label">Status</label>
-                    <select name="status" class="input-field">
-                        <option value="draft" {{ old('status', $post->status ?? '') === 'draft' ? 'selected' : '' }}>Draft</option>
-                        <option value="published" {{ old('status', $post->status ?? '') === 'published' ? 'selected' : '' }}>Published</option>
+                    <label class="form-label">Status Publikasi</label>
+                    <select name="status" class="input-field font-medium">
+                        @can('berita.publish')
+                            <option value="published" {{ old('status', $post->status ?? '') === 'published' ? 'selected' : '' }}>Published (Langsung Terbit)</option>
+                            <option value="draft" {{ old('status', $post->status ?? '') === 'draft' ? 'selected' : '' }}>Draft (Konsep)</option>
+                            <option value="pending_review" {{ old('status', $post->status ?? '') === 'pending_review' ? 'selected' : '' }}>Menunggu Review (Pending)</option>
+                        @else
+                            <option value="draft" {{ old('status', $post->status ?? '') === 'draft' ? 'selected' : '' }}>Draft (Simpan Konsep)</option>
+                            <option value="pending_review" {{ old('status', $post->status ?? 'pending_review') === 'pending_review' ? 'selected' : '' }}>Ajukan Review (Menunggu Persetujuan)</option>
+                        @endcan
                     </select>
+                    @cannot('berita.publish')
+                        <p class="text-[11px] text-gray-500 mt-1">Pilih <em>Ajukan Review</em> agar artikel dapat ditinjau dan diterbitkan oleh Editor/Admin.</p>
+                    @endcannot
                 </div>
                 <div>
                     <label class="form-label">Tanggal Publish</label>
@@ -107,7 +132,7 @@
 
             <div class="flex gap-3">
                 <button type="submit" class="btn-primary flex-1 justify-center">
-                    <i class="fas fa-save"></i> {{ isset($post) ? 'Update' : 'Simpan' }}
+                    <i class="fas fa-save"></i> {{ isset($post) ? 'Simpan Perubahan' : 'Simpan Berita' }}
                 </button>
                 <a href="{{ route('admin.posts.index') }}" class="btn-outline px-4">Batal</a>
             </div>

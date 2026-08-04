@@ -11,17 +11,29 @@ class ExtracurricularController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('ekstrakurikuler.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat data ekstrakurikuler.');
+        }
+
         $extracurriculars = Extracurricular::orderBy('order')->paginate(15);
         return view('admin.extracurriculars.index', compact('extracurriculars'));
     }
 
     public function create()
     {
+        if (!auth()->user()->can('ekstrakurikuler.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah ekstrakurikuler.');
+        }
+
         return view('admin.extracurriculars.create');
     }
 
     public function store(Request $request)
     {
+        if (!auth()->user()->can('ekstrakurikuler.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah ekstrakurikuler.');
+        }
+
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -42,21 +54,33 @@ class ExtracurricularController extends Controller
         Extracurricular::create($validated);
 
         return redirect()->route('admin.extracurriculars.index')
-                         ->with('success', 'Extracurricular created successfully.');
+                         ->with('success', 'Ekstrakurikuler berhasil ditambahkan.');
     }
 
     public function show(Extracurricular $extracurricular)
     {
+        if (!auth()->user()->can('ekstrakurikuler.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat ekstrakurikuler.');
+        }
+
         return view('admin.extracurriculars.show', compact('extracurricular'));
     }
 
     public function edit(Extracurricular $extracurricular)
     {
+        if (!auth()->user()->can('ekstrakurikuler.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah ekstrakurikuler.');
+        }
+
         return view('admin.extracurriculars.edit', compact('extracurricular'));
     }
 
     public function update(Request $request, Extracurricular $extracurricular)
     {
+        if (!auth()->user()->can('ekstrakurikuler.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah ekstrakurikuler.');
+        }
+
         $validated = $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -80,17 +104,21 @@ class ExtracurricularController extends Controller
         $extracurricular->update($validated);
 
         return redirect()->route('admin.extracurriculars.index')
-                         ->with('success', 'Extracurricular updated successfully.');
+                         ->with('success', 'Ekstrakurikuler berhasil diperbarui.');
     }
 
     public function destroy(Extracurricular $extracurricular)
     {
+        if (!auth()->user()->can('ekstrakurikuler.delete')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus ekstrakurikuler.');
+        }
+
         if ($extracurricular->image) {
             Storage::disk('public')->delete($extracurricular->image);
         }
         $extracurricular->delete();
 
         return redirect()->route('admin.extracurriculars.index')
-                         ->with('success', 'Extracurricular deleted successfully.');
+                         ->with('success', 'Ekstrakurikuler berhasil dihapus.');
     }
 }

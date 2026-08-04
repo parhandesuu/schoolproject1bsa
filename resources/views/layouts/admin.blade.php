@@ -28,7 +28,7 @@
             <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-sm flex-shrink-0">S1</div>
             <div class="overflow-hidden">
                 <div class="font-bold text-white text-sm truncate">{{ \App\Models\Setting::get('school_short_name','SMAN 1') }}</div>
-                <div class="text-xs text-gray-500">Admin Panel</div>
+                <div class="text-xs text-gray-500">Admin Panel ({{ ucfirst(auth()->user()->roles->first()->name ?? auth()->user()->role ?? 'Staff') }})</div>
             </div>
         </div>
 
@@ -39,83 +39,166 @@
                 <i class="fas fa-tachometer-alt icon"></i><span>Dashboard</span>
             </a>
 
+            {{-- Approval Menu (Editor & Admin) --}}
+            @if(auth()->user()->can('berita.publish') || auth()->user()->can('halaman.publish'))
+                @php
+                    $pendingCount = \App\Models\Post::where('status', 'pending_review')->count() + \App\Models\Page::where('status', 'pending_review')->count();
+                @endphp
+                <a href="{{ route('admin.approvals.index') }}" class="sidebar-link {{ request()->routeIs('admin.approvals.*') ? 'active' : '' }}">
+                    <i class="fas fa-check-double icon text-amber-400"></i>
+                    <span class="flex-1 flex items-center justify-between">
+                        <span>Persetujuan</span>
+                        @if($pendingCount > 0)
+                            <span class="bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">{{ $pendingCount }}</span>
+                        @endif
+                    </span>
+                </a>
+            @endif
+
+            {{-- Kelola Home --}}
+            @canany(['hero-slider.read', 'slider.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Kelola Home</p>
+            @canany(['hero-slider.read', 'slider.read'])
             <a href="{{ route('admin.hero-sliders.index') }}" class="sidebar-link {{ request()->routeIs('admin.hero-sliders.*') ? 'active' : '' }}">
                 <i class="fas fa-images icon"></i><span>Hero Slider</span>
             </a>
+            @endcanany
+            @endcanany
 
+            {{-- Profil Sekolah --}}
+            @canany(['halaman.read', 'halaman-statis.read', 'guru.read', 'staff-guru.read', 'fasilitas.read', 'prestasi.read', 'ekstrakurikuler.read', 'ekskul.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Profil Sekolah</p>
+            @canany(['halaman.read', 'halaman-statis.read'])
             <a href="{{ route('admin.pages.index') }}" class="sidebar-link {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                 <i class="fas fa-file-alt icon"></i><span>Halaman Statis</span>
             </a>
+            @endcanany
+            @canany(['guru.read', 'staff-guru.read'])
             <a href="{{ route('admin.teachers.index') }}" class="sidebar-link {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}">
                 <i class="fas fa-users icon"></i><span>Guru & Staff</span>
             </a>
+            @endcanany
+            @can('fasilitas.read')
             <a href="{{ route('admin.facilities.index') }}" class="sidebar-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}">
                 <i class="fas fa-building icon"></i><span>Fasilitas</span>
             </a>
+            @endcan
+            @can('prestasi.read')
             <a href="{{ route('admin.achievements.index') }}" class="sidebar-link {{ request()->routeIs('admin.achievements.*') ? 'active' : '' }}">
                 <i class="fas fa-trophy icon"></i><span>Prestasi</span>
             </a>
+            @endcan
+            @canany(['ekstrakurikuler.read', 'ekskul.read'])
             <a href="{{ route('admin.extracurriculars.index') }}" class="sidebar-link {{ request()->routeIs('admin.extracurriculars.*') ? 'active' : '' }}">
                 <i class="fas fa-running icon"></i><span>Ekstrakurikuler</span>
             </a>
+            @endcanany
+            @endcanany
 
+            {{-- Konten --}}
+            @canany(['kategori.read', 'kategori-berita.read', 'berita.read', 'komentar.read', 'agenda.read', 'pengumuman.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Konten</p>
+            @canany(['kategori.read', 'kategori-berita.read'])
             <a href="{{ route('admin.categories.index') }}" class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                 <i class="fas fa-tags icon"></i><span>Kategori</span>
             </a>
+            @endcanany
+            @can('berita.read')
             <a href="{{ route('admin.posts.index') }}" class="sidebar-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
                 <i class="fas fa-newspaper icon"></i><span>Berita</span>
             </a>
+            @endcan
+            @can('komentar.read')
             <a href="{{ route('admin.comments.index') }}" class="sidebar-link {{ request()->routeIs('admin.comments.*') ? 'active' : '' }}">
-                <i class="fas fa-comments icon"></i><span>Komentar
+                <i class="fas fa-comments icon"></i>
+                <span class="flex-1 flex items-center justify-between">
+                    <span>Komentar</span>
                     @php $pendingComments = \App\Models\Comment::where('status','pending')->count(); @endphp
-                    @if($pendingComments > 0)<span class="ml-auto bg-yellow-500 text-white text-xs px-2 py-0.5 rounded-full">{{ $pendingComments }}</span>@endif
+                    @if($pendingComments > 0)<span class="bg-yellow-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">{{ $pendingComments }}</span>@endif
                 </span>
             </a>
+            @endcan
+            @can('agenda.read')
             <a href="{{ route('admin.agendas.index') }}" class="sidebar-link {{ request()->routeIs('admin.agendas.*') ? 'active' : '' }}">
                 <i class="fas fa-calendar-alt icon"></i><span>Agenda</span>
             </a>
+            @endcan
+            @can('pengumuman.read')
             <a href="{{ route('admin.announcements.index') }}" class="sidebar-link {{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}">
                 <i class="fas fa-bullhorn icon"></i><span>Pengumuman</span>
             </a>
+            @endcan
+            @endcanany
 
+            {{-- Media --}}
+            @canany(['galeri-foto.read', 'galeri_foto.read', 'galeri-video.read', 'galeri_video.read', 'dokumen.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Media</p>
+            @canany(['galeri-foto.read', 'galeri_foto.read'])
             <a href="{{ route('admin.photo-albums.index') }}" class="sidebar-link {{ request()->routeIs('admin.photo-albums.*') ? 'active' : '' }}">
                 <i class="fas fa-camera icon"></i><span>Galeri Foto</span>
             </a>
+            @endcanany
+            @canany(['galeri-video.read', 'galeri_video.read'])
             <a href="{{ route('admin.video-galleries.index') }}" class="sidebar-link {{ request()->routeIs('admin.video-galleries.*') ? 'active' : '' }}">
                 <i class="fas fa-video icon"></i><span>Galeri Video</span>
             </a>
+            @endcanany
+            @can('dokumen.read')
             <a href="{{ route('admin.documents.index') }}" class="sidebar-link {{ request()->routeIs('admin.documents.*') ? 'active' : '' }}">
                 <i class="fas fa-file-download icon"></i><span>Dokumen</span>
             </a>
+            @endcan
+            @endcanany
 
+            {{-- Layanan & Lainnya --}}
+            @canany(['layanan.read', 'kontak.read', 'pesan.read', 'statistik.read', 'media-sosial.read', 'medsos.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Layanan & Lainnya</p>
+            @can('layanan.read')
             <a href="{{ route('admin.services.index') }}" class="sidebar-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                 <i class="fas fa-concierge-bell icon"></i><span>Layanan</span>
             </a>
+            @endcan
+            @canany(['kontak.read', 'pesan.read'])
             <a href="{{ route('admin.contacts.index') }}" class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
-                <i class="fas fa-envelope icon"></i><span>Pesan Masuk
+                <i class="fas fa-envelope icon"></i>
+                <span class="flex-1 flex items-center justify-between">
+                    <span>Pesan Masuk</span>
                     @php $unreadContacts = \App\Models\Contact::where('status','unread')->count(); @endphp
-                    @if($unreadContacts > 0)<span class="ml-auto bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">{{ $unreadContacts }}</span>@endif
+                    @if($unreadContacts > 0)<span class="bg-blue-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-full">{{ $unreadContacts }}</span>@endif
                 </span>
             </a>
+            @endcanany
+            @can('statistik.read')
             <a href="{{ route('admin.statistics.index') }}" class="sidebar-link {{ request()->routeIs('admin.statistics.*') ? 'active' : '' }}">
                 <i class="fas fa-chart-bar icon"></i><span>Statistik</span>
             </a>
+            @endcan
+            @canany(['media-sosial.read', 'medsos.read'])
             <a href="{{ route('admin.social-media.index') }}" class="sidebar-link {{ request()->routeIs('admin.social-media.*') ? 'active' : '' }}">
                 <i class="fas fa-share-alt icon"></i><span>Social Media</span>
             </a>
+            @endcanany
+            @endcanany
 
+            {{-- Pengaturan --}}
+            @canany(['pengaturan.read', 'settings.read', 'users.read', 'user.read', 'activity-log.read', 'log.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Pengaturan</p>
+            @canany(['pengaturan.read', 'settings.read'])
             <a href="{{ route('admin.settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                 <i class="fas fa-cog icon"></i><span>Pengaturan</span>
             </a>
+            @endcanany
+            @canany(['users.read', 'user.read'])
             <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="fas fa-user-cog icon"></i><span>Pengguna</span>
             </a>
+            @endcanany
+            @canany(['activity-log.read', 'log.read'])
+            <a href="{{ route('admin.activity-logs.index') }}" class="sidebar-link {{ request()->routeIs('admin.activity-logs.*') ? 'active' : '' }}">
+                <i class="fas fa-history icon"></i><span>Log Aktivitas</span>
+            </a>
+            @endcanany
+            @endcanany
         </nav>
 
         {{-- Footer --}}
@@ -148,35 +231,45 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3" x-data="{ open: false }">
-                    {{-- Notif --}}
-                    @if(isset($unreadContacts) && $unreadContacts > 0 || \App\Models\Contact::where('status','unread')->count() > 0)
-                    <a href="{{ route('admin.contacts.index') }}" class="relative p-2 text-gray-500 hover:bg-gray-100 rounded-lg">
-                        <i class="fas fa-bell"></i>
-                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <div class="flex items-center gap-3" x-data="{ userMenuOpen: false }">
+                    {{-- Notifications Bell --}}
+                    @php
+                        $unreadNotifCount = auth()->user()->unreadNotifications->count();
+                    @endphp
+                    <a href="{{ route('admin.notifications.index') }}" class="relative p-2 text-gray-500 hover:bg-gray-100 rounded-xl transition-colors" title="Pemberitahuan">
+                        <i class="fas fa-bell text-base"></i>
+                        @if($unreadNotifCount > 0)
+                            <span class="absolute top-1.5 right-1.5 flex h-4 w-4">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500 text-white text-[9px] font-bold items-center justify-center">
+                                    {{ $unreadNotifCount > 9 ? '9+' : $unreadNotifCount }}
+                                </span>
+                            </span>
+                        @endif
                     </a>
-                    @endif
 
                     {{-- User Dropdown --}}
                     <div class="relative">
-                        <button @click="open = !open" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
+                        <button @click="userMenuOpen = !userMenuOpen" class="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 transition-colors">
                             <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center font-semibold text-blue-700 text-sm">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                             <div class="hidden sm:block text-left">
                                 <div class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</div>
-                                <div class="text-xs text-gray-400">{{ ucfirst(auth()->user()->role) }}</div>
+                                <div class="text-xs text-gray-400">{{ ucfirst(auth()->user()->roles->first()->name ?? auth()->user()->role ?? 'User') }}</div>
                             </div>
                             <i class="fas fa-chevron-down text-xs text-gray-400 hidden sm:block"></i>
                         </button>
-                        <div x-show="open" @click.outside="open = false" x-transition
-                             class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                        <div x-show="userMenuOpen" @click.outside="userMenuOpen = false" x-transition
+                             class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50" style="display: none;">
                             <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                                 <i class="fas fa-user-circle w-4 text-gray-400"></i>Profil Saya
                             </a>
+                            @can('pengaturan.read')
                             <a href="{{ route('admin.settings.index') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50">
                                 <i class="fas fa-cog w-4 text-gray-400"></i>Pengaturan
                             </a>
+                            @endcan
                             <div class="border-t border-gray-100 my-1"></div>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf

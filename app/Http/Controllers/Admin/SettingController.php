@@ -11,12 +11,20 @@ class SettingController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('pengaturan.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat pengaturan sistem.');
+        }
+
         $settings = Setting::pluck('value', 'key');
         return view('admin.settings.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
+        if (!auth()->user()->can('pengaturan.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah pengaturan sistem.');
+        }
+
         $data = $request->except(['_token', '_method']);
 
         // Handle image uploads for logo and favicon
@@ -41,6 +49,6 @@ class SettingController extends Controller
         }
 
         return redirect()->route('admin.settings.index')
-                         ->with('success', 'Settings updated successfully.');
+                         ->with('success', 'Pengaturan berhasil diperbarui.');
     }
 }

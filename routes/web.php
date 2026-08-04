@@ -68,16 +68,32 @@ require __DIR__.'/auth.php';
 // ===========================
 // ADMIN ROUTES
 // ===========================
+Route::get('/dashboard', fn() => redirect()->route('admin.dashboard'))->middleware(['auth'])->name('dashboard');
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     // Dashboard
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
+    // Approval Workflow
+    Route::get('approvals', [\App\Http\Controllers\Admin\ApprovalController::class, 'posts'])->name('approvals.index');
+    Route::get('approvals/posts', [\App\Http\Controllers\Admin\ApprovalController::class, 'posts'])->name('approvals.posts');
+    Route::get('approvals/pages', [\App\Http\Controllers\Admin\ApprovalController::class, 'pages'])->name('approvals.pages');
+    Route::post('approvals/posts/{post}/approve', [\App\Http\Controllers\Admin\ApprovalController::class, 'approvePost'])->name('approvals.posts.approve');
+    Route::post('approvals/posts/{post}/reject', [\App\Http\Controllers\Admin\ApprovalController::class, 'rejectPost'])->name('approvals.posts.reject');
+    Route::post('approvals/pages/{page}/approve', [\App\Http\Controllers\Admin\ApprovalController::class, 'approvePage'])->name('approvals.pages.approve');
+    Route::post('approvals/pages/{page}/reject', [\App\Http\Controllers\Admin\ApprovalController::class, 'rejectPage'])->name('approvals.pages.reject');
+
+    // Activity Logs
+    Route::get('activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-logs.index');
+
+    // Notifications
+    Route::get('notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/{id}/read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
+    Route::post('notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+
     // Hero Sliders
     Route::resource('hero-sliders', \App\Http\Controllers\Admin\HeroSliderController::class);
-
-    // Logos
-    Route::resource('logos', \App\Http\Controllers\Admin\LogoController::class);
 
     // Pages (Profil, Sejarah, Visi Misi, Sambutan, Struktur)
     Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);

@@ -11,17 +11,29 @@ class AnnouncementController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('pengumuman.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat pengumuman.');
+        }
+
         $announcements = Announcement::latest()->paginate(15);
         return view('admin.announcements.index', compact('announcements'));
     }
 
     public function create()
     {
+        if (!auth()->user()->can('pengumuman.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah pengumuman.');
+        }
+
         return view('admin.announcements.create');
     }
 
     public function store(Request $request)
     {
+        if (!auth()->user()->can('pengumuman.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah pengumuman.');
+        }
+
         $validated = $request->validate([
             'title'      => 'required|string|max:255',
             'content'    => 'required|string',
@@ -44,21 +56,33 @@ class AnnouncementController extends Controller
         Announcement::create($validated);
 
         return redirect()->route('admin.announcements.index')
-                         ->with('success', 'Announcement created successfully.');
+                         ->with('success', 'Pengumuman berhasil ditambahkan.');
     }
 
     public function show(Announcement $announcement)
     {
+        if (!auth()->user()->can('pengumuman.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat pengumuman.');
+        }
+
         return view('admin.announcements.show', compact('announcement'));
     }
 
     public function edit(Announcement $announcement)
     {
+        if (!auth()->user()->can('pengumuman.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah pengumuman.');
+        }
+
         return view('admin.announcements.edit', compact('announcement'));
     }
 
     public function update(Request $request, Announcement $announcement)
     {
+        if (!auth()->user()->can('pengumuman.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah pengumuman.');
+        }
+
         $validated = $request->validate([
             'title'      => 'required|string|max:255',
             'content'    => 'required|string',
@@ -84,17 +108,21 @@ class AnnouncementController extends Controller
         $announcement->update($validated);
 
         return redirect()->route('admin.announcements.index')
-                         ->with('success', 'Announcement updated successfully.');
+                         ->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
     public function destroy(Announcement $announcement)
     {
+        if (!auth()->user()->can('pengumuman.delete')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus pengumuman.');
+        }
+
         if ($announcement->file) {
             Storage::disk('public')->delete($announcement->file);
         }
         $announcement->delete();
 
         return redirect()->route('admin.announcements.index')
-                         ->with('success', 'Announcement deleted successfully.');
+                         ->with('success', 'Pengumuman berhasil dihapus.');
     }
 }

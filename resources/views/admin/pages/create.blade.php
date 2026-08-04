@@ -8,8 +8,24 @@
 <div class="max-w-4xl">
     <div class="flex items-center gap-3 mb-6">
         <a href="{{ route('admin.pages.index') }}" class="w-9 h-9 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg"><i class="fas fa-arrow-left text-gray-600"></i></a>
-        <h2 class="text-xl font-bold text-gray-900">{{ isset($page) ? 'Edit Halaman' : 'Tambah Halaman' }}</h2>
+        <div>
+            <h2 class="text-xl font-bold text-gray-900">{{ isset($page) ? 'Edit Halaman' : 'Tambah Halaman' }}</h2>
+            <p class="text-xs text-gray-500 mt-0.5">Kelola konten halaman informasi statis</p>
+        </div>
     </div>
+
+    @if(isset($page) && $page->status === 'rejected')
+    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
+        <div class="flex items-start gap-3">
+            <i class="fas fa-exclamation-triangle text-red-500 text-lg mt-0.5"></i>
+            <div>
+                <h4 class="text-sm font-bold text-red-800">Halaman Ini Ditolak / Memerlukan Revisi</h4>
+                <p class="text-xs text-red-700 mt-1"><strong>Alasan / Catatan Reviewer:</strong> {{ $page->rejection_note ?? 'Silakan sesuaikan isi halaman sebelum mengajukan kembali.' }}</p>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <form action="{{ isset($page) ? route('admin.pages.update', $page) : route('admin.pages.store') }}" method="POST" enctype="multipart/form-data" class="admin-card space-y-5">
         @csrf @if(isset($page)) @method('PUT') @endif
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -50,12 +66,31 @@
                 <input type="text" name="meta_description" value="{{ old('meta_description', $page->meta_description ?? '') }}" class="input-field">
             </div>
         </div>
-        <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="is_active" value="1" class="rounded" {{ old('is_active', $page->is_active ?? true) ? 'checked' : '' }}>
-            <span class="text-sm text-gray-700">Aktifkan Halaman</span>
-        </label>
-        <div class="flex gap-3 pt-2 border-t border-gray-100">
-            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Simpan</button>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-gray-100">
+            <div>
+                <label class="form-label">Status Publikasi</label>
+                <select name="status" class="input-field font-medium">
+                    @can('halaman.publish')
+                        <option value="published" {{ old('status', $page->status ?? '') === 'published' ? 'selected' : '' }}>Published (Langsung Terbit)</option>
+                        <option value="draft" {{ old('status', $page->status ?? '') === 'draft' ? 'selected' : '' }}>Draft (Konsep)</option>
+                        <option value="pending_review" {{ old('status', $page->status ?? '') === 'pending_review' ? 'selected' : '' }}>Menunggu Review</option>
+                    @else
+                        <option value="draft" {{ old('status', $page->status ?? '') === 'draft' ? 'selected' : '' }}>Draft (Simpan Konsep)</option>
+                        <option value="pending_review" {{ old('status', $page->status ?? 'pending_review') === 'pending_review' ? 'selected' : '' }}>Ajukan Review</option>
+                    @endcan
+                </select>
+            </div>
+            <div class="flex items-center pt-6">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="is_active" value="1" class="rounded text-blue-600" {{ old('is_active', $page->is_active ?? true) ? 'checked' : '' }}>
+                    <span class="text-sm text-gray-700 font-medium">Aktifkan Halaman di Menu Publik</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-3 border-t border-gray-100">
+            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> {{ isset($page) ? 'Simpan Perubahan' : 'Simpan Halaman' }}</button>
             <a href="{{ route('admin.pages.index') }}" class="btn-outline">Batal</a>
         </div>
     </form>

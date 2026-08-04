@@ -12,11 +12,19 @@ class PhotoGalleryController extends Controller
 {
     public function index(PhotoAlbum $photoAlbum)
     {
+        if (!auth()->user()->can('galeri-foto.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat galeri foto.');
+        }
+
         return redirect()->route('admin.photo-albums.show', $photoAlbum->id);
     }
 
     public function store(Request $request, PhotoAlbum $photoAlbum)
     {
+        if (!auth()->user()->can('galeri-foto.create') && !auth()->user()->can('galeri-foto.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengunggah foto ke album.');
+        }
+
         $album = $photoAlbum;
         $request->validate([
             'images'   => 'required|array|min:1',
@@ -34,11 +42,15 @@ class PhotoGalleryController extends Controller
         }
 
         return redirect()->route('admin.photo-albums.show', $album->id)
-                         ->with('success', 'Photos uploaded successfully.');
+                         ->with('success', 'Foto berhasil diunggah.');
     }
 
     public function destroy(PhotoGallery $photo)
     {
+        if (!auth()->user()->can('galeri-foto.delete') && !auth()->user()->can('galeri-foto.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus foto galeri.');
+        }
+
         if ($photo->image) {
             Storage::disk('public')->delete($photo->image);
         }
@@ -46,6 +58,6 @@ class PhotoGalleryController extends Controller
         $photo->delete();
 
         return redirect()->route('admin.photo-albums.show', $albumId)
-                         ->with('success', 'Photo deleted successfully.');
+                         ->with('success', 'Foto berhasil dihapus.');
     }
 }

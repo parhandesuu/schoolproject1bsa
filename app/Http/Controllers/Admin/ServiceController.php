@@ -11,17 +11,29 @@ class ServiceController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('layanan.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat layanan.');
+        }
+
         $services = Service::orderBy('order')->paginate(15);
         return view('admin.services.index', compact('services'));
     }
 
     public function create()
     {
+        if (!auth()->user()->can('layanan.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah layanan.');
+        }
+
         return view('admin.services.create');
     }
 
     public function store(Request $request)
     {
+        if (!auth()->user()->can('layanan.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah layanan.');
+        }
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -42,21 +54,33 @@ class ServiceController extends Controller
         Service::create($validated);
 
         return redirect()->route('admin.services.index')
-                         ->with('success', 'Service created successfully.');
+                         ->with('success', 'Layanan berhasil ditambahkan.');
     }
 
     public function show(Service $service)
     {
+        if (!auth()->user()->can('layanan.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat layanan.');
+        }
+
         return view('admin.services.show', compact('service'));
     }
 
     public function edit(Service $service)
     {
+        if (!auth()->user()->can('layanan.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah layanan.');
+        }
+
         return view('admin.services.edit', compact('service'));
     }
 
     public function update(Request $request, Service $service)
     {
+        if (!auth()->user()->can('layanan.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah layanan.');
+        }
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -80,17 +104,21 @@ class ServiceController extends Controller
         $service->update($validated);
 
         return redirect()->route('admin.services.index')
-                         ->with('success', 'Service updated successfully.');
+                         ->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function destroy(Service $service)
     {
+        if (!auth()->user()->can('layanan.delete')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus layanan.');
+        }
+
         if ($service->image) {
             Storage::disk('public')->delete($service->image);
         }
         $service->delete();
 
         return redirect()->route('admin.services.index')
-                         ->with('success', 'Service deleted successfully.');
+                         ->with('success', 'Layanan berhasil dihapus.');
     }
 }

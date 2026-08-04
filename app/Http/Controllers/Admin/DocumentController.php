@@ -11,17 +11,29 @@ class DocumentController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->can('dokumen.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat dokumen.');
+        }
+
         $documents = Document::latest()->paginate(15);
         return view('admin.documents.index', compact('documents'));
     }
 
     public function create()
     {
+        if (!auth()->user()->can('dokumen.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah dokumen.');
+        }
+
         return view('admin.documents.create');
     }
 
     public function store(Request $request)
     {
+        if (!auth()->user()->can('dokumen.create')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menambah dokumen.');
+        }
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -39,21 +51,33 @@ class DocumentController extends Controller
         Document::create($validated);
 
         return redirect()->route('admin.documents.index')
-                         ->with('success', 'Document created successfully.');
+                         ->with('success', 'Dokumen berhasil diunggah.');
     }
 
     public function show(Document $document)
     {
+        if (!auth()->user()->can('dokumen.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat dokumen.');
+        }
+
         return view('admin.documents.show', compact('document'));
     }
 
     public function edit(Document $document)
     {
+        if (!auth()->user()->can('dokumen.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah dokumen.');
+        }
+
         return view('admin.documents.edit', compact('document'));
     }
 
     public function update(Request $request, Document $document)
     {
+        if (!auth()->user()->can('dokumen.update')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk mengubah dokumen.');
+        }
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -76,17 +100,21 @@ class DocumentController extends Controller
         $document->update($validated);
 
         return redirect()->route('admin.documents.index')
-                         ->with('success', 'Document updated successfully.');
+                         ->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     public function destroy(Document $document)
     {
+        if (!auth()->user()->can('dokumen.delete')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus dokumen.');
+        }
+
         if ($document->file) {
             Storage::disk('public')->delete($document->file);
         }
         $document->delete();
 
         return redirect()->route('admin.documents.index')
-                         ->with('success', 'Document deleted successfully.');
+                         ->with('success', 'Dokumen berhasil dihapus.');
     }
 }

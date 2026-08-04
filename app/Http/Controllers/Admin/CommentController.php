@@ -10,6 +10,10 @@ class CommentController extends Controller
 {
     public function index(Request $request)
     {
+        if (!auth()->user()->can('komentar.read')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk melihat komentar.');
+        }
+
         $query = Comment::with('post');
 
         if ($status = $request->input('status')) {
@@ -30,25 +34,37 @@ class CommentController extends Controller
 
     public function approve(Comment $comment)
     {
+        if (!auth()->user()->can('komentar.approve')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menyetujui komentar.');
+        }
+
         $comment->update(['status' => 'approved']);
 
         return redirect()->back()
-                         ->with('success', 'Comment approved successfully.');
+                         ->with('success', 'Komentar berhasil disetujui.');
     }
 
     public function reject(Comment $comment)
     {
+        if (!auth()->user()->can('komentar.approve')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menolak komentar.');
+        }
+
         $comment->update(['status' => 'rejected']);
 
         return redirect()->back()
-                         ->with('success', 'Comment rejected successfully.');
+                         ->with('success', 'Komentar berhasil ditolak.');
     }
 
     public function destroy(Comment $comment)
     {
+        if (!auth()->user()->can('komentar.delete')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk menghapus komentar.');
+        }
+
         $comment->delete();
 
         return redirect()->route('admin.comments.index')
-                         ->with('success', 'Comment deleted successfully.');
+                         ->with('success', 'Komentar berhasil dihapus.');
     }
 }
