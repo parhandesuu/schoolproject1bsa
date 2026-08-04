@@ -42,18 +42,31 @@ class DocumentController extends Controller
         // Ensure the document is active
         abort_if(!$document->is_active, 404);
 
-        // Increment download counter
-        $document->increment('downloads');
+        $filePath = $document->file;
 
-        // Determine the file path and return as a download
-        $filePath = $document->file_path;
-
-        if (!Storage::exists($filePath)) {
+        if (!$filePath) {
             abort(404, 'File tidak ditemukan.');
         }
 
-        $fileName = $document->file_name ?? basename($filePath);
+        // Check in public disk first, fallback to default disk
+        $disk = 'public';
+        if (!Storage::disk('public')->exists($filePath)) {
+            if (Storage::exists($filePath)) {
+                $disk = null;
+            } else {
+                abort(404, 'File tidak ditemukan di server.');
+            }
+        }
 
-        return Storage::download($filePath, $fileName);
+        // Increment download counter
+        $document->increment('downloads');
+
+        $ext = $document->file_type ?: pathinfo($filePath, PATHINFO_EXTENSION);
+        $cleanTitle = \Illuminate\Support\Str::slug($document->title);
+        $fileName = $cleanTitle ? ($cleanTitle . ($ext ? '.' . $ext : '')) : basename($filePath);
+
+        return $disk
+            ? Storage::disk($disk)->download($filePath, $fileName)
+            : Storage::download($filePath, $fileName);
     }
 }

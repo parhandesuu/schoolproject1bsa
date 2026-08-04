@@ -16,8 +16,8 @@
         <button type="submit" class="btn-primary px-4"><i class="fas fa-search"></i></button>
     </form>
 
-    @if($documents->count() > 0)
-        @foreach($documents as $category => $docs)
+    @if($groupedDocuments->count() > 0)
+        @foreach($groupedDocuments as $category => $docs)
         <div class="mb-8">
             <h2 class="font-bold text-gray-900 text-xl mb-4 flex items-center gap-2">
                 <i class="fas fa-folder-open text-amber-500"></i>
@@ -27,7 +27,7 @@
             <div class="space-y-3">
                 @foreach($docs as $doc)
                 @php
-                    $icon = match($doc->file_type) {
+                    $icon = match(strtolower($doc->file_type ?? '')) {
                         'pdf' => ['fas fa-file-pdf','text-red-500'],
                         'doc','docx' => ['fas fa-file-word','text-blue-600'],
                         'xls','xlsx' => ['fas fa-file-excel','text-green-600'],
