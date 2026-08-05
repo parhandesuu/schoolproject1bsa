@@ -28,7 +28,7 @@
         }
     }">
         @foreach($services as $i => $service)
-        <div id="service-{{ $service->id }}" data-index="{{ $i }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:border-blue-200 transition-all">
+        <div id="service-{{ $service->id }}" data-index="{{ $i }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:border-blue-200 transition-all" data-aos="fade-up" data-aos-delay="{{ ($i % 5) * 100 }}">
             <button @click="open === {{ $i }} ? open = null : open = {{ $i }}"
                     class="w-full flex items-center gap-4 p-5 md:p-6 text-left cursor-pointer">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"

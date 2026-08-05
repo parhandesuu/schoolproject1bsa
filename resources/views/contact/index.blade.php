@@ -12,7 +12,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {{-- Info --}}
-        <aside class="lg:col-span-1 space-y-4">
+        <aside class="lg:col-span-1 space-y-4" data-aos="fade-right">
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="font-bold text-gray-900 mb-5">Informasi Kontak</h3>
                 <div class="space-y-4">
@@ -84,7 +84,7 @@
         </aside>
 
         {{-- Form --}}
-        <main class="lg:col-span-2">
+        <main class="lg:col-span-2" data-aos="fade-left">
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
                 <h3 class="font-bold text-gray-900 text-xl mb-6">Kirim Pesan</h3>
 

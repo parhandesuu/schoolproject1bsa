@@ -14,7 +14,7 @@
     @if($extracurriculars->count() > 0)
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         @foreach($extracurriculars as $ekskul)
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             <div>
                 @if($ekskul->image)
                 <div class="aspect-video overflow-hidden relative">

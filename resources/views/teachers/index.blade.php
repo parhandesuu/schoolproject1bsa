@@ -28,7 +28,7 @@
         @if($teachers->count() > 0)
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5">
             @foreach($teachers as $teacher)
-            <div class="card p-5 text-center group hover:border-blue-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+            <div class="card p-5 text-center group hover:border-blue-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
                 <div>
                     <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-400 group-hover:scale-105 transition-all shadow-sm">
                         @if($teacher->photo)
@@ -71,7 +71,7 @@
         @if($staff->count() > 0)
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5">
             @foreach($staff as $s)
-            <div class="card p-5 text-center group hover:border-purple-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+            <div class="card p-5 text-center group hover:border-purple-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
                 <div>
                     <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-purple-400 group-hover:scale-105 transition-all shadow-sm">
                         @if($s->photo)

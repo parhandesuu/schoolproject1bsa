@@ -12,7 +12,7 @@
     @if($albums->count() > 0)
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         @foreach($albums as $album)
-        <div class="w-full">
+        <div class="w-full" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             <a href="{{ route('gallery.album', $album) }}" class="card group block overflow-hidden">
                 <div class="aspect-video overflow-hidden bg-gray-100 relative">
                     @if($album->cover)

@@ -21,7 +21,7 @@
         @if($upcomingAgendas->count() > 0)
         <div class="space-y-4">
             @foreach($upcomingAgendas as $agenda)
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex gap-0 overflow-hidden group">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex gap-0 overflow-hidden group" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
                 <div class="w-20 flex-shrink-0 bg-blue-700 flex flex-col items-center justify-center text-white py-4"
                      style="{{ $agenda->color ? 'background-color:'.$agenda->color : '' }}">
                     <span class="text-3xl font-extrabold leading-none">{{ $agenda->start_date->format('d') }}</span>

@@ -32,7 +32,7 @@
                 default   => 'fas fa-info-circle',
             };
         @endphp
-        <div class="bg-white rounded-2xl border border-gray-100 border-l-4 {{ $borderColor }} shadow-sm p-5 md:p-6">
+        <div class="bg-white rounded-2xl border border-gray-100 border-l-4 {{ $borderColor }} shadow-sm p-5 md:p-6" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
             <div class="flex items-start gap-4">
                 <i class="{{ $icon }} {{ $iconColor }} text-xl flex-shrink-0 mt-0.5"></i>
                 <div class="flex-1 min-w-0">

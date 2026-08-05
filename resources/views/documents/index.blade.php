@@ -36,7 +36,7 @@
                         default => ['fas fa-file','text-gray-400']
                     };
                 @endphp
-                <div class="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4 p-4">
+                <div class="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4 p-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 5) * 100 }}">
                     <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center">
                         <i class="{{ $icon[0] }} {{ $icon[1] }} text-2xl"></i>
                     </div>

@@ -15,14 +15,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <style>
         [x-cloak] { display: none !important; }
+        html, body { overflow-x: hidden; }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-white text-gray-800 antialiased" style="font-family:'Inter',sans-serif;">
+<body class="bg-white text-gray-800 antialiased overflow-x-hidden" style="font-family:'Inter',sans-serif;">
 
     @php $pinnedAnnouncement = \App\Models\Announcement::active()->where('is_pinned', true)->first(); @endphp
     @if($pinnedAnnouncement)
@@ -40,7 +42,7 @@
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
                     @php 
                         $logo1 = \App\Models\Setting::get('school_logo'); 
-                        $logo2 = \App\Models\Setting::get('school_logo_2');
+                        $logo2 = \App\Models\Setting::get('school_logo_2'); 
                     @endphp
                     
                     <div class="flex items-center space-x-2">
@@ -150,75 +152,113 @@
         </div>
     </nav>
 
-    <main class="{{ request()->routeIs('home') ? '' : 'pt-28 md:pt-32' }}">@yield('content')</main>
+    <main class="min-h-screen {{ request()->routeIs('home') ? '' : 'pt-28 md:pt-32' }}">
+        @yield('content')
+    </main>
 
-    <footer class="bg-gray-900 text-white mt-0">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div>
-                    <div class="flex flex-col space-y-4 mb-5">
+    <footer class="bg-gray-900 text-gray-300 border-t border-gray-800/60">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-14 lg:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12">
+                {{-- Kolom 1: Profil Sekolah & Sosmed --}}
+                <div class="lg:col-span-4">
+                    <div class="flex items-center space-x-3 mb-4">
                         @php 
-                            $logo1 = \App\Models\Setting::get('school_logo'); 
-                            $logo2 = \App\Models\Setting::get('school_logo_2');
+                            $footerLogo1 = \App\Models\Setting::get('school_logo'); 
+                            $footerLogo2 = \App\Models\Setting::get('school_logo_2'); 
                         @endphp
-                        
-                        <div class="flex items-center space-x-3">
-                            @if($logo1)
-                                <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-12 w-auto">
-                            @else
-                                <div class="w-12 h-12 bg-blue-700 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
-                            @endif
+                        @if($footerLogo1)
+                            <img src="{{ asset('storage/'.$footerLogo1) }}" alt="Logo Footer 1" class="h-10 md:h-11 w-auto object-contain">
+                        @else
+                            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white text-base">S1</div>
+                        @endif
 
-                            @if($logo2)
-                                <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-12 w-auto">
-                            @endif
-                        </div>
+                        @if($footerLogo2)
+                            <img src="{{ asset('storage/'.$footerLogo2) }}" alt="Logo Footer 2" class="h-10 md:h-11 w-auto object-contain">
+                        @endif
+
                         <div>
-                            <div class="font-bold text-white text-base mb-1 leading-tight">{{ \App\Models\Setting::get('school_name', 'UPT SMP Negeri 1 Buay Sandang Aji') }}</div>
-                            <div class="text-sm text-gray-400">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1 BSA') }}</div>
+                            <span class="font-bold text-white text-base block leading-snug">{{ \App\Models\Setting::get('school_name', 'SMP Negeri 1 Buay Sandang Aji') }}</span>
+                            <span class="text-xs text-blue-400/90 font-medium block">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</span>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ \App\Models\Setting::get('school_motto', 'Cerdas, Berkarakter, dan Berprestasi') }}</p>
-                    <div class="flex space-x-3">
-                        @foreach(\App\Models\SocialMedia::active()->get() as $social)
-                        <a href="{{ $social->url }}" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg flex items-center justify-center text-sm hover:scale-110 transition-transform" style="background-color:{{ $social->color ?? '#1e40af' }}">
-                            <i class="{{ $social->icon }} text-white text-sm"></i>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">{{ \App\Models\Setting::get('school_description', 'Website resmi sekolah sebagai media informasi dan komunikasi.') }}</p>
+                    <div class="flex items-center space-x-2.5">
+                        @foreach(\App\Models\SocialMedia::active()->get() as $soc)
+                        <a href="{{ $soc->url }}" target="_blank" class="w-9 h-9 bg-gray-800/90 hover:bg-blue-600 border border-gray-700/60 hover:border-blue-500 rounded-xl flex items-center justify-center text-gray-400 hover:text-white transition-all duration-200 text-sm hover:-translate-y-0.5 shadow-sm">
+                            <i class="{{ $soc->icon }}"></i>
                         </a>
                         @endforeach
                     </div>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Navigasi</h4>
+
+                {{-- Kolom 2: Navigasi --}}
+                <div class="lg:col-span-2">
+                    <h4 class="font-semibold text-white mb-5 text-xs uppercase tracking-widest flex items-center gap-2">
+                        <span>Navigasi</span>
+                        <span class="w-5 h-0.5 bg-blue-500/80 rounded-full inline-block"></span>
+                    </h4>
                     <ul class="space-y-2.5">
                         @foreach([['Beranda','home'],['Profil Sekolah','profile.index'],['Visi & Misi','profile.vision-mission'],['Guru & Staff','teachers.index'],['Berita','posts.index'],['Agenda','agendas.index'],['Kontak','contact.index']] as [$label,$route])
-                        <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-white text-sm transition-colors">{{ $label }}</a></li>
+                        <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-blue-400 hover:translate-x-1 inline-block text-sm transition-all duration-200">{{ $label }}</a></li>
                         @endforeach
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Informasi</h4>
+
+                {{-- Kolom 3: Informasi --}}
+                <div class="lg:col-span-2">
+                    <h4 class="font-semibold text-white mb-5 text-xs uppercase tracking-widest flex items-center gap-2">
+                        <span>Informasi</span>
+                        <span class="w-5 h-0.5 bg-blue-500/80 rounded-full inline-block"></span>
+                    </h4>
                     <ul class="space-y-2.5">
                         @foreach([['Prestasi','achievements.index'],['Ekstrakurikuler','extracurriculars.index'],['Fasilitas','facilities.index'],['Galeri Foto','gallery.photos'],['Galeri Video','gallery.videos'],['Dokumen','documents.index'],['Layanan','services.index']] as [$label,$route])
-                        <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-white text-sm transition-colors">{{ $label }}</a></li>
+                        <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-blue-400 hover:translate-x-1 inline-block text-sm transition-all duration-200">{{ $label }}</a></li>
                         @endforeach
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Kontak</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3 text-sm text-gray-400"><i class="fas fa-map-marker-alt text-blue-400 mt-0.5 w-4 shrink-0"></i><span>{{ \App\Models\Setting::get('contact_address','-') }}</span></li>
-                        <li class="flex items-center gap-3 text-sm text-gray-400"><i class="fas fa-phone text-blue-400 w-4 shrink-0"></i><a href="tel:{{ \App\Models\Setting::get('contact_phone') }}" class="hover:text-white">{{ \App\Models\Setting::get('contact_phone','-') }}</a></li>
+
+                {{-- Kolom 4: Kontak --}}
+                <div class="lg:col-span-4">
+                    <h4 class="font-semibold text-white mb-5 text-xs uppercase tracking-widest flex items-center gap-2">
+                        <span>Kontak</span>
+                        <span class="w-5 h-0.5 bg-blue-500/80 rounded-full inline-block"></span>
+                    </h4>
+                    <ul class="space-y-3.5">
+                        <li class="flex items-start gap-3 text-sm text-gray-400">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400 mt-0.5">
+                                <i class="fas fa-map-marker-alt text-xs"></i>
+                            </div>
+                            <span class="leading-relaxed">{{ \App\Models\Setting::get('contact_address','-') }}</span>
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
+                                <i class="fas fa-phone text-xs"></i>
+                            </div>
+                            <a href="tel:{{ \App\Models\Setting::get('contact_phone') }}" class="hover:text-blue-400 transition-colors">{{ \App\Models\Setting::get('contact_phone','-') }}</a>
+                        </li>
                         @if(\App\Models\Setting::get('contact_whatsapp'))
-                        <li class="flex items-center gap-3 text-sm text-gray-400"><i class="fab fa-whatsapp text-green-400 w-4 shrink-0"></i><a href="https://wa.me/{{ \App\Models\Setting::get('contact_whatsapp') }}" target="_blank" class="hover:text-white">WhatsApp</a></li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400">
+                                <i class="fab fa-whatsapp text-sm"></i>
+                            </div>
+                            <a href="https://wa.me/{{ \App\Models\Setting::get('contact_whatsapp') }}" target="_blank" class="hover:text-emerald-400 transition-colors">WhatsApp</a>
+                        </li>
                         @endif
-                        <li class="flex items-center gap-3 text-sm text-gray-400"><i class="fas fa-envelope text-blue-400 w-4 shrink-0"></i><a href="mailto:{{ \App\Models\Setting::get('contact_email') }}" class="hover:text-white">{{ \App\Models\Setting::get('contact_email','-') }}</a></li>
+                        <li class="flex items-center gap-3 text-sm text-gray-400">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
+                                <i class="fas fa-envelope text-xs"></i>
+                            </div>
+                            <a href="mailto:{{ \App\Models\Setting::get('contact_email') }}" class="hover:text-blue-400 transition-colors break-all">{{ \App\Models\Setting::get('contact_email','-') }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="border-t border-gray-800 py-5">
-            <div class="container mx-auto px-4 max-w-7xl text-center text-gray-500 text-sm">
-                &copy; {{ date('Y') }} {{ \App\Models\Setting::get('school_name','UPT SMP Negeri 1 Buay Sandang Aji') }}. All rights reserved. | Website Resmi Sekolah
+        
+        <div class="border-t border-gray-800/80 py-5">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-gray-500 text-center sm:text-left">
+                <p>&copy; {{ date('Y') }} <span class="text-gray-400 font-medium">{{ \App\Models\Setting::get('school_name','UPT SMP Negeri 1 Buay Sandang Aji') }}</span>. All rights reserved.</p>
+                <p class="text-gray-500">Website Resmi Sekolah</p>
             </div>
         </div>
     </footer>
@@ -233,6 +273,17 @@
         window.addEventListener('scroll', () => {
             btt.style.opacity = window.scrollY > 300 ? '1' : '0';
             btt.style.pointerEvents = window.scrollY > 300 ? 'auto' : 'none';
+        });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 900,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 50
+            });
         });
     </script>
     @stack('scripts')

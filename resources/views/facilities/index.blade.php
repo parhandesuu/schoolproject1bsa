@@ -12,7 +12,7 @@
     @if($facilities->count() > 0)
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($facilities as $facility)
-        <div class="card group">
+        <div class="card group" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             @if($facility->image)
             <div class="aspect-video overflow-hidden">
                 <img src="{{ asset('storage/'.$facility->image) }}" alt="{{ $facility->name }}"

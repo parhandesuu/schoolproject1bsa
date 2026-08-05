@@ -36,7 +36,7 @@
         {{-- Content --}}
         <div class="absolute inset-0 flex items-center pt-24 pb-12">
             <div class="container mx-auto px-6 sm:px-10 lg:px-16 max-w-7xl">
-                <div class="max-w-3xl animate-fade-in">
+                <div class="max-w-3xl" data-aos="fade-up">
                     
                     <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
                         <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
@@ -93,7 +93,7 @@
     <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent"></div>
 
     <div class="container mx-auto px-6 lg:px-16 max-w-7xl relative z-10 pt-24 pb-12">
-        <div class="max-w-3xl animate-fade-in">
+        <div class="max-w-3xl" data-aos="fade-up">
             
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
                 <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
@@ -124,7 +124,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {{-- Left: Profile Text --}}
-            <div>
+            <div data-aos="fade-right">
                 <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                     <i class="fas fa-school"></i> Tentang Kami
                 </div>
@@ -155,7 +155,7 @@
             {{-- Right: Statistics --}}
             <div class="grid grid-cols-2 gap-4">
                 @forelse($statistics as $stat)
-                <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group">
+                <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group" data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 4) * 150 }}">
                     <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-800 transition-colors">
                         <i class="{{ $stat->icon ?? 'fas fa-star' }} text-blue-800 group-hover:text-white transition-colors"></i>
                     </div>
@@ -164,7 +164,7 @@
                 </div>
                 @empty
                 @foreach([['fas fa-users','1.200+','Siswa Aktif'],['fas fa-chalkboard-teacher','80+','Guru & Staff'],['fas fa-trophy','150+','Prestasi'],['fas fa-history','25+','Tahun Berdiri']] as [$icon,$val,$label])
-                <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group">
+                <div class="bg-gradient-to-br from-white to-blue-50/50 border border-blue-100 rounded-2xl p-6 text-center hover:shadow-md transition-shadow group" data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 4) * 150 }}">
                     <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-800 transition-colors">
                         <i class="{{ $icon }} text-blue-800 group-hover:text-white transition-colors"></i>
                     </div>
@@ -183,7 +183,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {{-- Photo --}}
-            <div class="order-2 lg:order-1 flex justify-center">
+            <div class="order-2 lg:order-1 flex justify-center" data-aos="fade-right">
                 <div class="relative">
                     @if($principal && $principal->photo)
                     <img src="{{ asset('storage/'.$principal->photo) }}" alt="{{ $principal->name }}"
@@ -203,7 +203,7 @@
                 </div>
             </div>
             {{-- Content --}}
-            <div class="order-1 lg:order-2">
+            <div class="order-1 lg:order-2" data-aos="fade-left">
                 <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                     <i class="fas fa-quote-left"></i> Sambutan Kepala Sekolah
                 </div>
@@ -239,7 +239,7 @@
 {{-- ===== LATEST NEWS ===== --}}
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="section-title">Berita Terbaru</h2>
             <p class="section-subtitle">Informasi dan kabar terkini dari lingkungan sekolah</p>
@@ -247,7 +247,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             @forelse($posts as $post)
-            <article class="card group">
+            <article class="card group" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 150 }}">
                 <a href="{{ route('posts.show', $post) }}" class="block">
                     <div class="aspect-video overflow-hidden">
                         @if($post->thumbnail)
@@ -287,7 +287,7 @@
             @endforelse
         </div>
 
-        <div class="text-center">
+        <div class="text-center" data-aos="fade-up">
             <a href="{{ route('posts.index') }}" class="btn-outline">Lihat Semua Berita <i class="fas fa-arrow-right text-sm"></i></a>
         </div>
     </div>
@@ -301,7 +301,7 @@
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full translate-y-1/2 -translate-x-1/2"></div>
     </div>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10" data-aos="fade-up">
             <div>
                 <div class="section-divider bg-white/50 mx-0 mb-3"></div>
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Agenda Mendatang</h2>
@@ -314,7 +314,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach($agendas as $agenda)
-            <div class="bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors rounded-2xl p-5 flex gap-4">
+            <div class="bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors rounded-2xl p-5 flex gap-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 2) * 150 }}">
                 <div class="flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center text-white"
                      style="background-color:{{ $agenda->color ?? 'rgba(255,255,255,0.2)' }}">
                     <span class="text-2xl font-bold leading-none">{{ $agenda->start_date->format('d') }}</span>
@@ -343,14 +343,14 @@
 @if($achievements->count() > 0)
 <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="section-title">Prestasi Unggulan</h2>
             <p class="section-subtitle">Kebanggaan dan pencapaian siswa-siswi kami</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             @foreach($achievements as $achievement)
-            <div class="card p-6 group hover:border-blue-200">
+            <div class="card p-6 group hover:border-blue-200" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 150 }}">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500 transition-colors">
                         <i class="fas fa-trophy text-amber-500 group-hover:text-white transition-colors"></i>
@@ -372,7 +372,7 @@
             </div>
             @endforeach
         </div>
-        <div class="text-center">
+        <div class="text-center" data-aos="fade-up">
             <a href="{{ route('achievements.index') }}" class="btn-outline">Lihat Semua Prestasi</a>
         </div>
     </div>
@@ -383,14 +383,14 @@
 @if($extracurriculars->count() > 0)
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="section-title">Ekstrakurikuler</h2>
             <p class="section-subtitle">Berbagai kegiatan pengembangan diri di luar jam pelajaran</p>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10">
             @foreach($extracurriculars as $ekskul)
-            <a href="{{ route('extracurriculars.index') }}" class="block p-4 rounded-2xl bg-gray-50/60 hover:bg-white border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 text-center group">
+            <a href="{{ route('extracurriculars.index') }}" class="block p-4 rounded-2xl bg-gray-50/60 hover:bg-white border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 text-center group" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 6) * 100 }}">
                 <div class="w-16 h-16 mx-auto mb-3 rounded-2xl overflow-hidden bg-gradient-to-br {{ $ekskul->icon_theme['bg'] }} flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:shadow transition-all duration-300">
                     @if($ekskul->image)
                     <img src="{{ asset('storage/'.$ekskul->image) }}" alt="{{ $ekskul->name }}" class="w-full h-full object-cover">
@@ -408,7 +408,7 @@
             </a>
             @endforeach
         </div>
-        <div class="text-center">
+        <div class="text-center" data-aos="fade-up">
             <a href="{{ route('extracurriculars.index') }}" class="btn-outline">Lihat Semua</a>
         </div>
     </div>
@@ -419,14 +419,14 @@
 @if($photo_albums->count() > 0)
 <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="section-title">Galeri Foto</h2>
             <p class="section-subtitle">Momen dan kenangan indah kegiatan sekolah</p>
         </div>
         <div class="flex flex-wrap justify-center gap-6 mb-10">
             @foreach($photo_albums as $album)
-            <div class="w-full {{ $photo_albums->count() == 1 ? 'max-w-md' : ($photo_albums->count() == 2 ? 'sm:max-w-md md:w-[calc(50%-12px)]' : 'sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]') }}">
+            <div class="w-full {{ $photo_albums->count() == 1 ? 'max-w-md' : ($photo_albums->count() == 2 ? 'sm:max-w-md md:w-[calc(50%-12px)]' : 'sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]') }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 150 }}">
                 <a href="{{ route('gallery.album', $album) }}" class="card group block overflow-hidden">
                     <div class="aspect-video overflow-hidden bg-gray-100 relative">
                         @if($album->cover)
@@ -454,7 +454,7 @@
             </div>
             @endforeach
         </div>
-        <div class="text-center">
+        <div class="text-center" data-aos="fade-up">
             <a href="{{ route('gallery.photos') }}" class="btn-outline">Lihat Galeri Lengkap <i class="fas fa-arrow-right text-sm"></i></a>
         </div>
     </div>
@@ -465,14 +465,14 @@
 @if($services->count() > 0)
 <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div class="section-header">
+        <div class="section-header" data-aos="fade-up">
             <div class="section-divider"></div>
             <h2 class="section-title">Layanan Kami</h2>
             <p class="section-subtitle">Berbagai layanan yang tersedia untuk siswa, orang tua, dan masyarakat</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($services as $service)
-            <a href="{{ route('services.index') }}#service-{{ $service->id }}" class="card p-6 group hover:border-blue-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between block bg-white rounded-2xl border border-gray-100">
+            <a href="{{ route('services.index') }}#service-{{ $service->id }}" class="card p-6 group hover:border-blue-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between block bg-white rounded-2xl border border-gray-100" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 150 }}">
                 <div>
                     <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-800 transition-colors">
                         <i class="{{ $service->icon ?? 'fas fa-concierge-bell' }} text-blue-800 group-hover:text-white transition-colors"></i>
@@ -487,7 +487,7 @@
             </a>
             @endforeach
         </div>
-        <div class="text-center mt-10">
+        <div class="text-center mt-10" data-aos="fade-up">
             <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 font-semibold text-blue-800 hover:text-white bg-blue-50 hover:bg-blue-800 px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md">
                 <span>Lihat Semua Layanan ({{ \App\Models\Service::where('is_active', true)->count() }})</span>
                 <i class="fas fa-arrow-right text-xs"></i>
@@ -505,7 +505,7 @@
     </div>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div>
+            <div data-aos="fade-right">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Hubungi Kami</h2>
                 <p class="text-white/75 mb-8">Kami siap membantu Anda. Jangan ragu untuk menghubungi kami.</p>
                 <ul class="space-y-4">
@@ -539,7 +539,7 @@
                 </div>
             </div>
             @if(\App\Models\Setting::get('contact_maps_embed'))
-            <div class="rounded-2xl overflow-hidden shadow-2xl h-64 lg:h-80">
+            <div class="rounded-2xl overflow-hidden shadow-2xl h-64 lg:h-80" data-aos="fade-left">
                 <iframe src="{{ \App\Models\Setting::get('contact_maps_embed') }}"
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade" class="grayscale hover:grayscale-0 transition-all duration-500"></iframe>

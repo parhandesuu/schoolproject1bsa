@@ -19,7 +19,8 @@
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         @foreach($photos as $photo)
         <button @click="lightbox=true; currentSrc='{{ asset('storage/'.$photo->image) }}'; currentAlt='{{ $photo->caption ?? $album->name }}'"
-                class="aspect-square rounded-xl overflow-hidden group block w-full">
+                class="aspect-square rounded-xl overflow-hidden group block w-full"
+                data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
             <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->caption }}"
                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
         </button>

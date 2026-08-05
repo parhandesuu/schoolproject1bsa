@@ -38,7 +38,7 @@
     @if($achievements->count() > 0)
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         @foreach($achievements as $achievement)
-        <div class="card p-6 group hover:border-amber-200">
+        <div class="card p-6 group hover:border-amber-200" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             @if($achievement->image)
             <img src="{{ asset('storage/'.$achievement->image) }}" alt="{{ $achievement->title }}"
                  class="w-full h-32 object-cover rounded-xl mb-4">

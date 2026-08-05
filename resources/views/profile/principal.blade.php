@@ -12,7 +12,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <aside class="lg:col-span-1">
+        <aside class="lg:col-span-1" data-aos="fade-right">
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden sticky top-24">
                 <div class="bg-blue-700 px-5 py-4"><h3 class="font-bold text-white text-sm">Menu Profil</h3></div>
                 <nav class="divide-y divide-gray-50">
@@ -24,7 +24,7 @@
                 </nav>
             </div>
         </aside>
-        <main class="lg:col-span-3">
+        <main class="lg:col-span-3" data-aos="fade-left">
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
                 <div class="flex flex-col md:flex-row gap-8 mb-8">
                     @if($principal)

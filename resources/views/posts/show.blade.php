@@ -9,7 +9,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {{-- Main Content --}}
-        <main class="lg:col-span-2">
+        <main class="lg:col-span-2" data-aos="fade-right">
             <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 {{-- Thumbnail --}}
                 @if($post->thumbnail)
@@ -140,7 +140,7 @@
         </main>
 
         {{-- Sidebar --}}
-        <aside class="lg:col-span-1">
+        <aside class="lg:col-span-1" data-aos="fade-left">
             {{-- Related Posts --}}
             @if($relatedPosts->count() > 0)
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-5">

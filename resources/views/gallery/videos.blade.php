@@ -12,7 +12,7 @@
     @if($videos->count() > 0)
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         @foreach($videos as $video)
-        <div class="card group cursor-pointer" @click="modal=true; videoId='{{ $video->youtube_id }}'">
+        <div class="card group cursor-pointer" @click="modal=true; videoId='{{ $video->youtube_id }}'" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             <div class="aspect-video overflow-hidden relative">
                 <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/hqdefault.jpg"
                      alt="{{ $video->title }}"

@@ -39,7 +39,7 @@
     @if($posts->count() > 0)
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         @foreach($posts as $post)
-        <article class="card group {{ $post->is_featured ? 'ring-2 ring-blue-500 ring-offset-2' : '' }}">
+        <article class="card group {{ $post->is_featured ? 'ring-2 ring-blue-500 ring-offset-2' : '' }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
             <a href="{{ route('posts.show', $post) }}" class="block">
                 <div class="aspect-video overflow-hidden">
                     @if($post->thumbnail)
