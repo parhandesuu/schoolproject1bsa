@@ -16,10 +16,10 @@
     @endif
 
     @if($photos->count() > 0)
-    <div class="flex flex-wrap justify-center gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         @foreach($photos as $photo)
         <button @click="lightbox=true; currentSrc='{{ asset('storage/'.$photo->image) }}'; currentAlt='{{ $photo->caption ?? $album->name }}'"
-                class="aspect-square rounded-xl overflow-hidden group block w-full {{ $photos->count() == 1 ? 'max-w-md' : ($photos->count() == 2 ? 'max-w-xs sm:w-[calc(50%-12px)]' : ($photos->count() == 3 ? 'max-w-xs sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]' : 'w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-12px)]')) }}">
+                class="aspect-square rounded-xl overflow-hidden group block w-full">
             <img src="{{ asset('storage/'.$photo->image) }}" alt="{{ $photo->caption }}"
                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
         </button>

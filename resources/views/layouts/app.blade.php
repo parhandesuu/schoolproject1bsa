@@ -34,9 +34,9 @@
     </div>
     @endif
 
-    <nav class="fixed top-4 left-0 right-0 z-50 mx-4 md:mx-auto max-w-7xl transition-all duration-300" x-data="{ open: false }">
-        <div class="bg-white/85 backdrop-blur-xl shadow-lg shadow-blue-900/5 border border-white/50 rounded-full px-5 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
+    <nav class="fixed top-6 md:top-7 left-0 right-0 z-50 mx-4 md:mx-auto max-w-7xl transition-all duration-300" x-data="{ open: false }">
+        <div class="bg-white/90 backdrop-blur-xl shadow-md shadow-blue-900/5 border border-white/60 rounded-full px-4 lg:px-6 py-0.5">
+            <div class="flex items-center justify-between h-14 lg:h-16">
                 <a href="{{ route('home') }}" class="flex items-center space-x-3">
                     @php 
                         $logo1 = \App\Models\Setting::get('school_logo'); 
@@ -45,27 +45,27 @@
                     
                     <div class="flex items-center space-x-2">
                         @if($logo1)
-                            <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-10 w-auto">
+                            <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-8 md:h-9 w-auto">
                         @else
-                            <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center font-bold text-white text-sm">S1</div>
+                            <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center font-bold text-white text-xs md:text-sm">S1</div>
                         @endif
 
                         @if($logo2)
-                            <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-10 w-auto">
+                            <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-8 md:h-9 w-auto">
                         @endif
                     </div>
 
-                    <div class="hidden sm:block leading-tight">
-                        <div class="font-bold text-blue-800 text-sm">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
-                        <div class="text-xs text-gray-500">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</div>
+                    <div class="hidden sm:block leading-tight pt-1">
+                        <div class="font-bold text-blue-800 text-sm leading-snug">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
+                        <div class="text-[11px] text-gray-500 leading-none">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</div>
                     </div>
                 </a>
 
                 <div class="hidden lg:flex items-center gap-1 xl:gap-1.5 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Beranda</a>
+                    <a href="{{ route('home') }}" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('home') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Beranda</a>
 
                     <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
-                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                        <button @click="open = !open" type="button" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('profile.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Profil</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
-                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('teachers.*', 'facilities.*', 'achievements.*', 'extracurriculars.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                        <button @click="open = !open" type="button" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('teachers.*', 'facilities.*', 'achievements.*', 'extracurriculars.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Akademik</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
@@ -95,10 +95,10 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('posts.index') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Berita</a>
+                    <a href="{{ route('posts.index') }}" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('posts.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Berita</a>
 
                     <div class="relative group" x-data="{ open: false }" @mouseenter="open=true" @mouseleave="open=false" @click.outside="open=false">
-                        <button @click="open = !open" type="button" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('agendas.*', 'announcements.*', 'gallery.*', 'documents.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
+                        <button @click="open = !open" type="button" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center gap-1.5 transition-all duration-200 {{ request()->routeIs('agendas.*', 'announcements.*', 'gallery.*', 'documents.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">
                             <span>Informasi</span>
                             <i class="fas fa-chevron-down text-[10px] opacity-60 transition-transform duration-200" :class="open ? 'rotate-180 opacity-100' : ''"></i>
                         </button>
@@ -108,13 +108,13 @@
                                 <a href="{{ route('announcements.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Pengumuman</a>
                                 <a href="{{ route('gallery.photos') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Galeri Foto</a>
                                 <a href="{{ route('gallery.videos') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Galeri Video</a>
-                                <a href="{{ route('documents.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Download</a>
+                                <a href="{{ route('documents.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-800 text-sm transition-colors">Dokumen</a>
                             </div>
                         </div>
                     </div>
 
-                    <a href="{{ route('services.index') }}" class="px-3.5 py-2 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Layanan</a>
-                    <a href="{{ route('contact.index') }}" class="ml-1 px-5 py-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-medium inline-flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
+                    <a href="{{ route('services.index') }}" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Layanan</a>
+                    <a href="{{ route('contact.index') }}" class="ml-1 px-4 py-1.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium inline-flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
                 </div>
 
                 <button @click="open = !open" class="lg:hidden p-2 rounded-full text-gray-600 hover:bg-gray-100">
@@ -143,14 +143,14 @@
                 <a href="{{ route('announcements.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Pengumuman</a>
                 <a href="{{ route('gallery.photos') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Galeri Foto</a>
                 <a href="{{ route('gallery.videos') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Galeri Video</a>
-                <a href="{{ route('documents.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Download</a>
+                <a href="{{ route('documents.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Dokumen</a>
                 <a href="{{ route('services.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Layanan</a>
                 <a href="{{ route('contact.index') }}" class="block px-3 py-2.5 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-800 font-medium text-center mt-2">Kontak</a>
             </div>
         </div>
     </nav>
 
-    <main class="{{ request()->routeIs('home') ? '' : 'pt-32' }}">@yield('content')</main>
+    <main class="{{ request()->routeIs('home') ? '' : 'pt-28 md:pt-32' }}">@yield('content')</main>
 
     <footer class="bg-gray-900 text-white mt-0">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16">
@@ -198,7 +198,7 @@
                 <div>
                     <h4 class="font-semibold text-white mb-5 text-sm uppercase tracking-wider">Informasi</h4>
                     <ul class="space-y-2.5">
-                        @foreach([['Prestasi','achievements.index'],['Ekstrakurikuler','extracurriculars.index'],['Fasilitas','facilities.index'],['Galeri Foto','gallery.photos'],['Galeri Video','gallery.videos'],['Download','documents.index'],['Layanan','services.index']] as [$label,$route])
+                        @foreach([['Prestasi','achievements.index'],['Ekstrakurikuler','extracurriculars.index'],['Fasilitas','facilities.index'],['Galeri Foto','gallery.photos'],['Galeri Video','gallery.videos'],['Dokumen','documents.index'],['Layanan','services.index']] as [$label,$route])
                         <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-white text-sm transition-colors">{{ $label }}</a></li>
                         @endforeach
                     </ul>

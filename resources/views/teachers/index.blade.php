@@ -26,22 +26,38 @@
     {{-- Teachers --}}
     <div x-show="tab==='guru'" x-transition>
         @if($teachers->count() > 0)
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5">
             @foreach($teachers as $teacher)
-            <div class="card p-4 text-center group hover:border-blue-200">
-                <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-300 transition-all">
-                    @if($teacher->photo)
-                    <img src="{{ asset('storage/'.$teacher->photo) }}" alt="{{ $teacher->name }}" class="w-full h-full object-cover">
-                    @else
-                    <div class="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                        <span class="text-2xl font-bold text-blue-600">{{ strtoupper(substr($teacher->name,0,1)) }}</span>
+            <div class="card p-5 text-center group hover:border-blue-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-400 group-hover:scale-105 transition-all shadow-sm">
+                        @if($teacher->photo)
+                        <img src="{{ asset('storage/'.$teacher->photo) }}" alt="{{ $teacher->name }}" class="w-full h-full object-cover">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-2xl shadow-inner">
+                            {{ strtoupper(substr($teacher->name,0,1)) }}
+                        </div>
+                        @endif
+                    </div>
+                    <div class="font-bold text-gray-900 text-sm mb-1 leading-snug">{{ $teacher->name }}</div>
+                    <div class="text-xs text-blue-600 font-medium mb-1.5">{{ $teacher->position }}</div>
+                    @if($teacher->subject)
+                    <div class="inline-flex items-center gap-1 text-xs font-semibold text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-full mb-1.5">
+                        <i class="fas fa-book-open text-[10px]"></i>
+                        <span>{{ $teacher->subject }}</span>
+                    </div>
+                    @endif
+                    @if($teacher->education && $teacher->education !== '-')
+                    <div class="text-[11px] text-slate-600 bg-slate-100 rounded-md px-2 py-0.5 mt-1 inline-block font-medium">
+                        {{ $teacher->education }}
                     </div>
                     @endif
                 </div>
-                <div class="font-semibold text-gray-900 text-sm mb-0.5 line-clamp-2">{{ $teacher->name }}</div>
-                <div class="text-xs text-blue-600 mb-1">{{ $teacher->position }}</div>
-                @if($teacher->subject)<div class="text-xs text-gray-400">{{ $teacher->subject }}</div>@endif
-                @if($teacher->nip)<div class="text-xs text-gray-300 mt-1">{{ $teacher->nip }}</div>@endif
+                @if($teacher->nip)
+                <div class="text-[11px] text-gray-400 mt-3 pt-2 border-t border-gray-100 font-mono">
+                    NIP. {{ $teacher->nip }}
+                </div>
+                @endif
             </div>
             @endforeach
         </div>
@@ -53,21 +69,32 @@
     {{-- Staff --}}
     <div x-show="tab==='staff'" x-transition>
         @if($staff->count() > 0)
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5">
             @foreach($staff as $s)
-            <div class="card p-4 text-center group hover:border-blue-200">
-                <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-blue-300 transition-all">
-                    @if($s->photo)
-                    <img src="{{ asset('storage/'.$s->photo) }}" alt="{{ $s->name }}" class="w-full h-full object-cover">
-                    @else
-                    <div class="w-full h-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
-                        <span class="text-2xl font-bold text-purple-600">{{ strtoupper(substr($s->name,0,1)) }}</span>
+            <div class="card p-5 text-center group hover:border-purple-300 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-purple-400 group-hover:scale-105 transition-all shadow-sm">
+                        @if($s->photo)
+                        <img src="{{ asset('storage/'.$s->photo) }}" alt="{{ $s->name }}" class="w-full h-full object-cover">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-purple-500 to-indigo-700 flex items-center justify-center text-white font-bold text-2xl shadow-inner">
+                            {{ strtoupper(substr($s->name,0,1)) }}
+                        </div>
+                        @endif
+                    </div>
+                    <div class="font-bold text-gray-900 text-sm mb-1 leading-snug">{{ $s->name }}</div>
+                    <div class="text-xs text-purple-600 font-medium mb-1.5">{{ $s->position }}</div>
+                    @if($s->education)
+                    <div class="text-[11px] text-purple-700 bg-purple-50 rounded-md px-2 py-0.5 mt-1 inline-block font-medium">
+                        {{ $s->education }}
                     </div>
                     @endif
                 </div>
-                <div class="font-semibold text-gray-900 text-sm mb-0.5">{{ $s->name }}</div>
-                <div class="text-xs text-purple-600 mb-1">{{ $s->position }}</div>
-                @if($s->nip)<div class="text-xs text-gray-300 mt-1">{{ $s->nip }}</div>@endif
+                @if($s->nip)
+                <div class="text-[11px] text-gray-400 mt-3 pt-2 border-t border-gray-100 font-mono">
+                    NIP. {{ $s->nip }}
+                </div>
+                @endif
             </div>
             @endforeach
         </div>

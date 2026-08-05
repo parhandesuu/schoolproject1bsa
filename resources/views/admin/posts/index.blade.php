@@ -57,7 +57,7 @@
                             @endif
                             <div class="min-w-0">
                                 <div class="font-semibold text-gray-900 line-clamp-1">{{ $post->title }}</div>
-                                @if($post->is_featured)<span class="text-xs text-amber-600 font-medium"><i class="fas fa-star mr-1"></i>Featured</span>@endif
+                                @if($post->is_featured)<span class="text-xs text-amber-600 font-medium"><i class="fas fa-thumbtack mr-1"></i>Disematkan</span>@endif
                                 @if($post->status === 'rejected' && $post->rejection_note)
                                     <div class="text-[11px] text-red-600 mt-0.5 line-clamp-1"><i class="fas fa-info-circle mr-1"></i>Catatan: {{ $post->rejection_note }}</div>
                                 @endif

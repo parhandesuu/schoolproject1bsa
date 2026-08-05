@@ -38,8 +38,8 @@ class SampleDataSeeder extends Seeder
     {
         $stats = [
             ['label' => 'Jumlah Peserta Didik', 'value' => '367', 'icon' => 'fas fa-user-graduate', 'color' => '#1e40af', 'order' => 1],
-            ['label' => 'Tenaga Pendidik (Guru)', 'value' => '42', 'icon' => 'fas fa-chalkboard-teacher', 'color' => '#0ea5e9', 'order' => 2],
-            ['label' => 'Tenaga Kependidikan', 'value' => '7', 'icon' => 'fas fa-users-cog', 'color' => '#6366f1', 'order' => 3],
+            ['label' => 'Tenaga Pendidik (Guru)', 'value' => '28', 'icon' => 'fas fa-chalkboard-teacher', 'color' => '#0ea5e9', 'order' => 2],
+            ['label' => 'Tenaga Kependidikan', 'value' => '10', 'icon' => 'fas fa-users-cog', 'color' => '#6366f1', 'order' => 3],
             ['label' => 'Rombongan Belajar', 'value' => '13', 'icon' => 'fas fa-school', 'color' => '#10b981', 'order' => 4],
             ['label' => 'Ekstrakurikuler', 'value' => '9', 'icon' => 'fas fa-futbol', 'color' => '#f59e0b', 'order' => 5],
             ['label' => 'Akreditasi Sekolah', 'value' => 'B', 'icon' => 'fas fa-award', 'color' => '#ec4899', 'order' => 6],
@@ -263,75 +263,60 @@ class SampleDataSeeder extends Seeder
 
     private function seedTeachers(): void
     {
-        // 42 Pendidik (Guru)
+        Teacher::truncate();
+
+        // 28 Pendidik (Guru)
         $teachers = [
-            ['name' => 'ROSIDAH, S.Pd', 'nip' => '197005171997022002', 'position' => 'Kepala Sekolah', 'subject' => 'Manajemen Pendidikan', 'education' => 'S1 Pendidikan', 'type' => 'teacher', 'order' => 1],
-            ['name' => 'YUNIARTIKA, S.Pd', 'nip' => '197006122007012009', 'position' => 'Wakil Kurikulum / Guru', 'subject' => 'Bahasa Inggris', 'education' => 'S1 Pendidikan Bahasa Inggris', 'type' => 'teacher', 'order' => 2],
-            ['name' => 'FARA MUSTIKAWATI, S.Pd', 'nip' => '198007292014072002', 'position' => 'Wakil Kesiswaan / Guru', 'subject' => 'Bahasa Inggris', 'education' => 'S1 Pendidikan Bahasa Inggris', 'type' => 'teacher', 'order' => 3],
-            ['name' => 'MUHAMMAD ERWIN, S.Pd', 'nip' => '197210212008011003', 'position' => 'Wakil Sarpras & Bendahara / Guru', 'subject' => 'Penjasorkes', 'education' => 'S1 Penjaskesrek', 'type' => 'teacher', 'order' => 4],
-            ['name' => 'EMILIA RUSDA, S.Pd', 'nip' => '198011242007012005', 'position' => 'Wakil Humas & Ka. Lab IPA / Guru', 'subject' => 'IPA', 'education' => 'S1 Pendidikan IPA', 'type' => 'teacher', 'order' => 5],
-            ['name' => 'ZURAIDAH, S.Pd.I', 'nip' => '196901042007012007', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PAI & Budi Pekerti', 'education' => 'S1 Pendidikan Agama Islam', 'type' => 'teacher', 'order' => 6],
-            ['name' => 'DEWI ANGRAINI, S.Pd', 'nip' => '197412122007012015', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 7],
-            ['name' => 'MAMAH TARMAH, S.Ag', 'nip' => '197103122007012006', 'position' => 'Koordinator Infak / Guru', 'subject' => 'PAI & Budi Pekerti', 'education' => 'S1 Agama Islam', 'type' => 'teacher', 'order' => 8],
-            ['name' => 'ROSYANTI, S.Pd', 'nip' => '197002012007012007', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 9],
-            ['name' => 'ERLY KARTIKA W, S.Pd', 'nip' => '197804152007012013', 'position' => 'Ka. Lab Bahasa / Guru', 'subject' => 'Bahasa Inggris', 'education' => 'S1 Pendidikan Bahasa Inggris', 'type' => 'teacher', 'order' => 10],
-            ['name' => 'APRIYANTI MUSTIKA R., S.Pd', 'nip' => '198004112008012007', 'position' => 'Kepala Perpustakaan / Guru', 'subject' => 'IPA', 'education' => 'S1 Pendidikan Biologi', 'type' => 'teacher', 'order' => 11],
-            ['name' => 'ARJUANA, S.Pd', 'nip' => '197204092008011003', 'position' => 'Koordinator Kekeluargaan / Guru', 'subject' => 'IPS', 'education' => 'S1 Pendidikan IPS', 'type' => 'teacher', 'order' => 12],
-            ['name' => 'ELINDA PUSPASARI, S.Pd', 'nip' => '198009132008012009', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 13],
-            ['name' => 'NETI HERAWATI, S.Pd', 'nip' => '198204212008012007', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => 'S1 Pendidikan Fisika', 'type' => 'teacher', 'order' => 14],
-            ['name' => 'ROMAULI, S.Pd', 'nip' => '198305012009032007', 'position' => 'Guru Bimbingan Konseling (BK)', 'subject' => 'Bimbingan Konseling', 'education' => 'S1 Bimbingan Konseling', 'type' => 'teacher', 'order' => 15],
-            ['name' => 'SUMIATI, S.Pd', 'nip' => '198207122010012025', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 16],
-            ['name' => 'DIAN ANGGRAINI, S.Pd', 'nip' => '198309112010012018', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS', 'education' => 'S1 Pendidikan Geografi', 'type' => 'teacher', 'order' => 17],
-            ['name' => 'EVA NURMALA, S.Pd', 'nip' => '198006092014072004', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 18],
-            ['name' => 'JAYANI, S.Pd', 'nip' => '198406082014071004', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PPKn', 'education' => 'S1 PPKn', 'type' => 'teacher', 'order' => 19],
-            ['name' => 'MULYADI, S.Psi', 'nip' => '197904082021211003', 'position' => 'Pembina Seni / Guru', 'subject' => 'Seni Budaya', 'education' => 'S1 Psikologi', 'type' => 'teacher', 'order' => 20],
-            ['name' => 'ASMARIADI, S.Pd', 'nip' => '198308062021211003', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Prakarya & Seni', 'education' => 'S1 Pendidikan', 'type' => 'teacher', 'order' => 21],
-            ['name' => 'FERIYANTI, S.Sos.i', 'nip' => '197602052022212008', 'position' => 'Guru Bimbingan Konseling (BK)', 'subject' => 'Bimbingan Konseling', 'education' => 'S1 Sosial Islam', 'type' => 'teacher', 'order' => 22],
-            ['name' => 'ARYA ADI SANTIKA, S.Pd', 'nip' => '199304192022211004', 'position' => 'Pembina OSIS & Koord. Projek / Guru', 'subject' => 'PPKn', 'education' => 'S1 Pendidikan PPKn', 'type' => 'teacher', 'order' => 23],
-            ['name' => 'INDRA WARYANDA, S.Pd', 'nip' => '198906052022211007', 'position' => 'Pembina Pramuka & Koord. Projek / Guru', 'subject' => 'Penjasorkes', 'education' => 'S1 Penjasorkes', 'type' => 'teacher', 'order' => 24],
-            ['name' => 'INDAH FEBRIANTI, S.Pd', 'nip' => '199202112022212013', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 25],
-            ['name' => 'AGUSTINA WATI, S.Pd', 'nip' => '197608142023212006', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS', 'education' => 'S1 Pendidikan Ekonomi', 'type' => 'teacher', 'order' => 26],
-            ['name' => 'ANWAR HIDAYAT, S.Pd', 'nip' => '198504062023211008', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => 'S1 Pendidikan Kimia', 'type' => 'teacher', 'order' => 27],
-            ['name' => 'ERISKA, S.Pd', 'nip' => '199312152023212028', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 28],
-            ['name' => 'LINDA MARYATI, S.Pd', 'nip' => '199010072023212023', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Inggris', 'education' => 'S1 Pendidikan Bahasa Inggris', 'type' => 'teacher', 'order' => 29],
-            ['name' => 'MARLINA, S.Pd', 'nip' => '199403162023212021', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 30],
-            ['name' => 'MARLINAWATI, S.Pd', 'nip' => '198603052023212023', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => 'S1 Pendidikan Biologi', 'type' => 'teacher', 'order' => 31],
-            ['name' => 'MURNIATIN, S.Pd', 'nip' => '198909192023212021', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PAI & Budi Pekerti', 'education' => 'S1 Pendidikan Agama Islam', 'type' => 'teacher', 'order' => 32],
-            ['name' => 'NOVRIANTI, S.Pd', 'nip' => '198811252023212018', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS', 'education' => 'S1 Pendidikan Sejarah', 'type' => 'teacher', 'order' => 33],
-            ['name' => 'PUSPA DEWI, S.Pd', 'nip' => '198202022023212016', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 34],
-            ['name' => 'REKHA HARDIANTI, S.Pd', 'nip' => '199104082023212028', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 35],
-            ['name' => 'RENI APRIYANTI, S.Pd', 'nip' => '198904082023212014', 'position' => 'Koord. Projek / Guru', 'subject' => 'Seni Budaya', 'education' => 'S1 Seni Tari', 'type' => 'teacher', 'order' => 36],
-            ['name' => 'SRI NOPIYANTI, S.Pd', 'nip' => '199211032023212024', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Inggris', 'education' => 'S1 Pendidikan Bahasa Inggris', 'type' => 'teacher', 'order' => 37],
-            ['name' => 'SUSI ANDRIANI, S.Pd', 'nip' => '199103132023212025', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'S1 Pendidikan Matematika', 'type' => 'teacher', 'order' => 38],
-            ['name' => 'DEKI ISWANTO, S.Pd', 'nip' => '198612142024211008', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Penjasorkes', 'education' => 'S1 Penjaskes', 'type' => 'teacher', 'order' => 39],
-            ['name' => 'DESI RATNA SARI, S.Pd', 'nip' => '199412122024212027', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Prakarya & Seni', 'education' => 'S1 Pendidikan Kesenian', 'type' => 'teacher', 'order' => 40],
-            ['name' => 'LISNAYANTI, S.Pd', 'nip' => '199611252024212030', 'position' => 'Koord. Projek / Guru', 'subject' => 'IPA', 'education' => 'S1 Pendidikan Fisika', 'type' => 'teacher', 'order' => 41],
-            ['name' => 'RIKA AGUSTINA, S.Pd', 'nip' => '199508172024212029', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'S1 Pendidikan Bahasa Indonesia', 'type' => 'teacher', 'order' => 42],
+            ['name' => 'MAMAH TARMAH, S.Pd.I', 'nip' => '197505132006042012', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PAI', 'education' => 'Pembina Tingkat 1 / IV.b', 'type' => 'teacher', 'order' => 1],
+            ['name' => 'MUZAIYANA, S.Ag', 'nip' => '197001052007012055', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PAI', 'education' => 'Penata Tingkat I / III.d', 'type' => 'teacher', 'order' => 2],
+            ['name' => 'RENI APRIYANTI, S.Pd', 'nip' => '199604102020122010', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PKn', 'education' => 'Penata Muda / III.a', 'type' => 'teacher', 'order' => 3],
+            ['name' => 'LISNAYANTI, S.Pd', 'nip' => '198405102024212026', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PKn', 'education' => 'Ahli Pertama / IX', 'type' => 'teacher', 'order' => 4],
+            ['name' => 'BERTI MAIYA SARI, S.Pd', 'nip' => '197905202008012026', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'Penata Tingkat 1 / III.d', 'type' => 'teacher', 'order' => 5],
+            ['name' => 'NENNY TRIANA, S.Pd', 'nip' => '198106062010012007', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'Penata / III.c', 'type' => 'teacher', 'order' => 6],
+            ['name' => 'AYU SURYANI, S.Pd', 'nip' => '199304302023212019', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia', 'education' => 'Ahli Pertama / IX', 'type' => 'teacher', 'order' => 7],
+            ['name' => 'DAMRAN HADINATA, S.Pd', 'nip' => '197710192007011015', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Inggris', 'education' => 'Penata Tingkat 1 / III.d', 'type' => 'teacher', 'order' => 8],
+            ['name' => 'APRIYANTI MUSTIKA RINI, S.Pd', 'nip' => '198204242009042002', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Inggris', 'education' => 'Penata Tingkat 1 / III.d', 'type' => 'teacher', 'order' => 9],
+            ['name' => 'MUHAMMAD ERWIN, S.Pd', 'nip' => '198602082011011010', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Inggris', 'education' => 'Penata / III.c', 'type' => 'teacher', 'order' => 10],
+            ['name' => 'FARA MUSTIKAWATI, S.Pd', 'nip' => '197210012006042013', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'Pembina Tingkat 1 / IV.b', 'type' => 'teacher', 'order' => 11],
+            ['name' => 'YUNIARTIKA, S.Pd', 'nip' => '198306042006042015', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'Pembina Tingkat 1 / IV.b', 'type' => 'teacher', 'order' => 12],
+            ['name' => 'ARJUNA, S.Pd', 'nip' => '198607282011012007', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Matematika', 'education' => 'Penata Tingkat 1 / III.d', 'type' => 'teacher', 'order' => 13],
+            ['name' => 'SUCI ZANORA, S.Pd', 'nip' => '198901292024212020', 'position' => 'Guru Mata Pelajaran', 'subject' => 'TIK', 'education' => 'Ahli Pertama / IX', 'type' => 'teacher', 'order' => 14],
+            ['name' => 'EMILIA RUSDA, S.Pd', 'nip' => '197405192005012005', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => 'Pembina Tingkat 1 / IV.b', 'type' => 'teacher', 'order' => 15],
+            ['name' => 'FIYA LARASATI, S.Pd', 'nip' => '198902252011012006', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => 'Penata / III.c', 'type' => 'teacher', 'order' => 16],
+            ['name' => 'LENI MARYAMA FITRY', 'nip' => '199303192025212114', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPA', 'education' => '-', 'type' => 'teacher', 'order' => 17],
+            ['name' => 'ERLY KARTIKA WARDANI, S.Pd', 'nip' => '198207042006042012', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS', 'education' => 'Pembina Tingkat 1 / IV.b', 'type' => 'teacher', 'order' => 18],
+            ['name' => 'FITRIANTI ISNAINI, S.Pd', 'nip' => '198207192010012001', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS', 'education' => 'Penata Muda Tk. 1 / III.b', 'type' => 'teacher', 'order' => 19],
+            ['name' => 'ARYA ADI SANTIKA, S.Pd', 'nip' => '198902132023211008', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PJOK', 'education' => 'Ahli Pertama / IX', 'type' => 'teacher', 'order' => 20],
+            ['name' => 'INDRA WARYANDA, S.Pd', 'nip' => '199103092023211004', 'position' => 'Guru Mata Pelajaran', 'subject' => 'PJOK, TIK', 'education' => 'Ahli Pertama / IX', 'type' => 'teacher', 'order' => 21],
+            ['name' => 'DIANA FITRY, S.Pd', 'nip' => '198804102025212138', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Bahasa Indonesia, TIK', 'education' => '-', 'type' => 'teacher', 'order' => 22],
+            ['name' => 'EPA SILPIANA, S.Pd', 'nip' => '198406022025212074', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Seni Budaya', 'education' => '-', 'type' => 'teacher', 'order' => 23],
+            ['name' => 'MULYADI, S.Psi', 'nip' => '197201252025211033', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Seni Budaya, BK', 'education' => '-', 'type' => 'teacher', 'order' => 24],
+            ['name' => 'ARIFATI MUNFARIDA, S.Pd', 'nip' => '199803142025212064', 'position' => 'Guru Mata Pelajaran', 'subject' => 'IPS, Seni Budaya', 'education' => '-', 'type' => 'teacher', 'order' => 25],
+            ['name' => 'SUSI BAYANSARI, S.Pd', 'nip' => '199702212025212077', 'position' => 'Guru Mata Pelajaran', 'subject' => 'Seni Budaya, TIK', 'education' => '-', 'type' => 'teacher', 'order' => 26],
+            ['name' => 'ROMAULI ISMAYANTI P, S.Pd', 'nip' => '198105092009042001', 'position' => 'Guru Bimbingan Konseling (BK)', 'subject' => 'BK', 'education' => 'Penata / III.c', 'type' => 'teacher', 'order' => 27],
+            ['name' => 'FERIYANTI, S.Sos', 'nip' => '198102262009042001', 'position' => 'Guru Bimbingan Konseling (BK)', 'subject' => 'BK', 'education' => 'Penata Muda Tk. 1 / III.b', 'type' => 'teacher', 'order' => 28],
         ];
 
         foreach ($teachers as $t) {
-            Teacher::updateOrCreate(
-                ['nip' => $t['nip']],
-                $t + ['is_active' => true, 'photo' => null, 'bio' => null]
-            );
+            Teacher::create($t + ['is_active' => true, 'photo' => null, 'bio' => null]);
         }
 
-        // 7 Tenaga Kependidikan (Staff)
+        // 10 Tenaga Kependidikan (8 Staff TU + 2 Satpam)
         $staff = [
-            ['name' => 'IRSAN A RANI, SH', 'nip' => '196803272007011007', 'position' => 'Kepala / Koordinator Tata Usaha', 'subject' => null, 'education' => 'S1 Ilmu Hukum', 'type' => 'staff', 'order' => 43],
-            ['name' => 'HERMALIANA', 'nip' => '197808162007012013', 'position' => 'Staf Tata Usaha / Kepegawaian & Kearsipan', 'subject' => null, 'education' => 'SMA / Pengatur Tk.I', 'type' => 'staff', 'order' => 44],
-            ['name' => 'SITTI ZAHARA', 'nip' => '197812102008012008', 'position' => 'Staf Tata Usaha / Administrasi Kemuridan', 'subject' => null, 'education' => 'SMA / Pengatur Tk.I', 'type' => 'staff', 'order' => 45],
-            ['name' => 'BAMBANG IRAWAN', 'nip' => '198305042008011004', 'position' => 'Staf Tata Usaha / Pengadministrasi Sarana', 'subject' => null, 'education' => 'SMA / Pengatur Tk.I', 'type' => 'staff', 'order' => 46],
-            ['name' => 'SERIA PUSTIKA, S.Kom', 'nip' => '7552766667230122', 'position' => 'Operator Dapodik & IT Sekolah', 'subject' => null, 'education' => 'S1 Sistem Informasi', 'type' => 'staff', 'order' => 47],
-            ['name' => 'EVI EMILIA', 'nip' => '197906052022212008', 'position' => 'Staf Administrasi Perpustakaan', 'subject' => null, 'education' => 'SMA / Penata Muda', 'type' => 'staff', 'order' => 48],
-            ['name' => 'SUHERMAN SAWAK', 'nip' => '197805122014071003', 'position' => 'Petugas Keamanan & Penjaga Sekolah', 'subject' => null, 'education' => 'SMA / Pengatur', 'type' => 'staff', 'order' => 49],
+            ['name' => 'Irsan Ahmad Rani, SH', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => 'S1 Ilmu Hukum', 'type' => 'staff', 'order' => 29],
+            ['name' => 'Kasianto', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 30],
+            ['name' => 'Hermaliana', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 31],
+            ['name' => 'Sitti Zahara', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 32],
+            ['name' => 'Komariah', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 33],
+            ['name' => 'Evi Emilia', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 34],
+            ['name' => 'Bambang Irawan, SE', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => 'S1 Ekonomi', 'type' => 'staff', 'order' => 35],
+            ['name' => 'Ria Pustika, S.Kom', 'nip' => null, 'position' => 'Staff Tata Usaha', 'subject' => null, 'education' => 'S1 Sistem Informasi', 'type' => 'staff', 'order' => 36],
+            ['name' => 'Suherman', 'nip' => null, 'position' => 'Penjaga Sekolah / Satpam', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 37],
+            ['name' => 'Sawak', 'nip' => null, 'position' => 'Penjaga Sekolah / Satpam', 'subject' => null, 'education' => null, 'type' => 'staff', 'order' => 38],
         ];
 
         foreach ($staff as $s) {
-            Teacher::updateOrCreate(
-                ['nip' => $s['nip']],
-                $s + ['is_active' => true, 'photo' => null, 'bio' => null]
-            );
+            Teacher::create($s + ['is_active' => true, 'photo' => null, 'bio' => null]);
         }
     }
 

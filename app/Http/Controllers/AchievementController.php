@@ -16,9 +16,14 @@ class AchievementController extends Controller
         $query = Achievement::where('is_active', true)
             ->latest();
 
-        // Filter by level (e.g., nasional, provinsi, kabupaten/kota, sekolah)
+        // Filter by level (e.g., sekolah, kecamatan, kabupaten/kota, provinsi, nasional, internasional)
         if ($request->filled('level')) {
-            $query->where('level', $request->input('level'));
+            $level = trim($request->input('level'));
+            if ($level === 'Kabupaten/Kota' || $level === 'Kabupaten') {
+                $query->whereIn('level', ['Kabupaten/Kota', 'Kabupaten', 'Kota']);
+            } else {
+                $query->where('level', 'like', "%{$level}%");
+            }
         }
 
         // Filter by category (e.g., akademik, non-akademik, olahraga, seni)

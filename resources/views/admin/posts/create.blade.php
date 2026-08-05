@@ -126,7 +126,7 @@
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" name="is_featured" value="1" class="rounded border-gray-300 text-blue-600"
                            {{ old('is_featured', $post->is_featured ?? false) ? 'checked' : '' }}>
-                    <span class="text-sm text-gray-700">Tandai sebagai Featured</span>
+                    <span class="text-sm text-gray-700">Tandai sebagai Disematkan</span>
                 </label>
             </div>
 

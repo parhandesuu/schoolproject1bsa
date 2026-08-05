@@ -102,6 +102,16 @@ class PostController extends Controller
             'name'    => ['required', 'string', 'max:100'],
             'email'   => ['required', 'email', 'max:150'],
             'content' => ['required', 'string', 'min:5', 'max:2000'],
+        ], [
+            'name.required'    => 'Nama wajib diisi.',
+            'name.string'      => 'Nama harus berupa teks.',
+            'name.max'         => 'Nama maksimal 100 karakter.',
+            'email.required'   => 'Alamat email wajib diisi.',
+            'email.email'      => 'Format alamat email tidak valid.',
+            'email.max'        => 'Alamat email maksimal 150 karakter.',
+            'content.required' => 'Isi komentar wajib diisi.',
+            'content.min'      => 'Komentar minimal berisi :min karakter.',
+            'content.max'      => 'Komentar maksimal berisi :max karakter.',
         ]);
 
         $post->comments()->create([

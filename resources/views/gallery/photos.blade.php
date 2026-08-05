@@ -10,9 +10,9 @@
         <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight">Galeri Foto</h1>
     </div>
     @if($albums->count() > 0)
-    <div class="flex flex-wrap justify-center gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         @foreach($albums as $album)
-        <div class="w-full {{ $albums->count() == 1 ? 'max-w-md' : ($albums->count() == 2 ? 'sm:max-w-md md:w-[calc(50%-12px)]' : 'sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]') }}">
+        <div class="w-full">
             <a href="{{ route('gallery.album', $album) }}" class="card group block overflow-hidden">
                 <div class="aspect-video overflow-hidden bg-gray-100 relative">
                     @if($album->cover)

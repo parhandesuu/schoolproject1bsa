@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('title', 'Download Dokumen')
+@section('title', 'Dokumen Sekolah')
 @section('content')
 <div class="container mx-auto px-4 max-w-7xl pt-8 pb-16">
     <div class="mb-8">
         <nav class="text-xs md:text-sm text-gray-500 mb-2">
             <a href="{{ route('home') }}" class="hover:text-blue-700">Beranda</a> <span class="mx-1 text-gray-400">/</span>
-            <span class="text-gray-700 font-medium">Download Dokumen</span>
+            <span class="text-gray-700 font-medium">Dokumen</span>
         </nav>
-        <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight">Download Dokumen</h1>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight">Dokumen Sekolah</h1>
     </div>
     {{-- Search --}}
     <form method="GET" action="{{ route('documents.index') }}" class="flex gap-2 mb-8 max-w-md">

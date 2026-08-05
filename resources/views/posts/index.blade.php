@@ -58,7 +58,7 @@
                     <span class="text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">{{ $post->category->name }}</span>
                     @endif
                     @if($post->is_featured)
-                    <span class="text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full"><i class="fas fa-star mr-1"></i>Featured</span>
+                    <span class="text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full"><i class="fas fa-thumbtack mr-1"></i>Disematkan</span>
                     @endif
                 </div>
                 <h2 class="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
