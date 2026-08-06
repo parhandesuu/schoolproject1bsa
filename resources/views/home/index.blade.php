@@ -37,12 +37,6 @@
         <div class="absolute inset-0 flex items-center pt-24 pb-12">
             <div class="container mx-auto px-6 sm:px-10 lg:px-16 max-w-7xl">
                 <div class="max-w-3xl" data-aos="fade-up">
-                    
-                    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
-                        <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                        {{ \App\Models\Setting::get('school_short_name', 'SMPN 1 Buay Sandang Aji') }}
-                    </div>
-
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
                         {!! nl2br(e($slider->title)) !!}
                     </h1>
@@ -94,12 +88,6 @@
 
     <div class="container mx-auto px-6 lg:px-16 max-w-7xl relative z-10 pt-24 pb-12">
         <div class="max-w-3xl" data-aos="fade-up">
-            
-            <div class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 shadow-sm">
-                <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-                Website Resmi Sekolah
-            </div>
-
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
                 {{ \App\Models\Setting::get('school_name', 'SMP Negeri 1 Buay Sandang Aji') }}
             </h1>

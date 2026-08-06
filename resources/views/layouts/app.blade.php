@@ -39,27 +39,27 @@
     <nav class="fixed top-6 md:top-7 left-0 right-0 z-50 mx-4 md:mx-auto max-w-7xl transition-all duration-300" x-data="{ open: false }">
         <div class="bg-white/90 backdrop-blur-xl shadow-md shadow-blue-900/5 border border-white/60 rounded-full px-4 lg:px-6 py-0.5">
             <div class="flex items-center justify-between h-14 lg:h-16">
-                <a href="{{ route('home') }}" class="flex items-center space-x-3">
+                <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3 min-w-0 pr-2">
                     @php 
                         $logo1 = \App\Models\Setting::get('school_logo'); 
                         $logo2 = \App\Models\Setting::get('school_logo_2'); 
                     @endphp
                     
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
                         @if($logo1)
-                            <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-8 md:h-9 w-auto">
+                            <img src="{{ asset('storage/'.$logo1) }}" alt="Logo 1" class="h-7 sm:h-8 md:h-9 w-auto">
                         @else
-                            <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center font-bold text-white text-xs md:text-sm">S1</div>
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center font-bold text-white text-xs md:text-sm">S1</div>
                         @endif
 
                         @if($logo2)
-                            <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-8 md:h-9 w-auto">
+                            <img src="{{ asset('storage/'.$logo2) }}" alt="Logo 2" class="h-7 sm:h-8 md:h-9 w-auto">
                         @endif
                     </div>
 
-                    <div class="hidden sm:block leading-tight pt-1">
-                        <div class="font-bold text-blue-800 text-sm leading-snug">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
-                        <div class="text-[11px] text-gray-500 leading-none">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</div>
+                    <div class="leading-tight pt-1 min-w-0">
+                        <div class="font-bold text-blue-800 text-xs sm:text-sm leading-snug truncate sm:whitespace-normal">{{ \App\Models\Setting::get('school_short_name', 'SMPN 1') }}</div>
+                        <div class="hidden sm:block text-[11px] text-gray-500 leading-none">{{ \App\Models\Setting::get('school_motto', 'Berakhlakul Karimah, Sukses Berprestasi, dan Andal') }}</div>
                     </div>
                 </a>
 
