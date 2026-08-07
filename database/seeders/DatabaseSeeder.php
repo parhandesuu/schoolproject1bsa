@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             SampleDataSeeder::class,
             ServiceSeeder::class,
+            SurveyResponseSeeder::class,
         ]);
     }
 }

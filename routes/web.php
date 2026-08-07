@@ -60,6 +60,11 @@ Route::get('/layanan', [ServiceController::class, 'index'])->name('services.inde
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 
+// Survei Kepuasan Masyarakat (SKM)
+Route::get('/survei-kepuasan', [\App\Http\Controllers\SurveyController::class, 'index'])->name('survey.index');
+Route::post('/survei-kepuasan', [\App\Http\Controllers\SurveyController::class, 'store'])->name('survey.store');
+
+
 // ===========================
 // AUTH ROUTES (Breeze)
 // ===========================
@@ -139,11 +144,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Layanan
     Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
 
+    // Survei Kepuasan Masyarakat (SKM)
+    Route::get('surveys/export', [\App\Http\Controllers\Admin\SurveyController::class, 'exportExcel'])->name('surveys.export');
+    Route::get('surveys/print', [\App\Http\Controllers\Admin\SurveyController::class, 'print'])->name('surveys.print');
+    Route::resource('surveys', \App\Http\Controllers\Admin\SurveyController::class)->only(['index', 'show', 'destroy']);
+    Route::patch('survey-questions/{surveyQuestion}/toggle-status', [\App\Http\Controllers\Admin\SurveyQuestionController::class, 'toggleStatus'])->name('survey-questions.toggle-status');
+    Route::resource('survey-questions', \App\Http\Controllers\Admin\SurveyQuestionController::class)->except(['show']);
+
     // Kontak Masuk
     Route::get('contacts', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');
     Route::get('contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contacts.show');
     Route::patch('contacts/{contact}/read', [\App\Http\Controllers\Admin\ContactController::class, 'markRead'])->name('contacts.read');
     Route::delete('contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contacts.destroy');
+
 
     // Statistik
     Route::resource('statistics', \App\Http\Controllers\Admin\StatisticController::class);

@@ -116,6 +116,7 @@
                     </div>
 
                     <a href="{{ route('services.index') }}" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('services.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}">Layanan</a>
+                    <a href="{{ route('survey.index') }}" class="px-3 py-1.5 rounded-full inline-flex items-center justify-center transition-all duration-200 {{ request()->routeIs('survey.*') ? 'text-blue-800 bg-blue-50 font-semibold' : 'text-gray-600 hover:text-blue-800 hover:bg-gray-50' }}" title="Survei Kepuasan Masyarakat">Survei</a>
                     <a href="{{ route('contact.index') }}" class="ml-1 px-4 py-1.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium inline-flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md">Kontak</a>
                 </div>
 
@@ -147,9 +148,11 @@
                 <a href="{{ route('gallery.videos') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Galeri Video</a>
                 <a href="{{ route('documents.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Dokumen</a>
                 <a href="{{ route('services.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Layanan</a>
+                <a href="{{ route('survey.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-blue-50">Survei Kepuasan Masyarakat</a>
                 <a href="{{ route('contact.index') }}" class="block px-3 py-2.5 rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-800 font-medium text-center mt-2">Kontak</a>
             </div>
         </div>
+
     </nav>
 
     <main class="min-h-screen {{ request()->routeIs('home') ? '' : 'pt-28 md:pt-32' }}">
@@ -211,9 +214,10 @@
                         <span class="w-5 h-0.5 bg-blue-500/80 rounded-full inline-block"></span>
                     </h4>
                     <ul class="space-y-2.5">
-                        @foreach([['Prestasi','achievements.index'],['Ekstrakurikuler','extracurriculars.index'],['Fasilitas','facilities.index'],['Galeri Foto','gallery.photos'],['Galeri Video','gallery.videos'],['Dokumen','documents.index'],['Layanan','services.index']] as [$label,$route])
+                        @foreach([['Prestasi','achievements.index'],['Ekstrakurikuler','extracurriculars.index'],['Fasilitas','facilities.index'],['Galeri Foto','gallery.photos'],['Galeri Video','gallery.videos'],['Dokumen','documents.index'],['Layanan','services.index'],['Survei SKM','survey.index']] as [$label,$route])
                         <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-blue-400 hover:translate-x-1 inline-block text-sm transition-all duration-200">{{ $label }}</a></li>
                         @endforeach
+
                     </ul>
                 </div>
 

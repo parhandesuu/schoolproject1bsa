@@ -151,14 +151,20 @@
             @endcanany
 
             {{-- Layanan & Lainnya --}}
-            @canany(['layanan.read', 'kontak.read', 'pesan.read', 'statistik.read', 'media-sosial.read', 'medsos.read'])
+            @canany(['layanan.read', 'kontak.read', 'pesan.read', 'statistik.read', 'media-sosial.read', 'medsos.read', 'survei.read', 'skm.read'])
             <p class="px-3 pt-4 pb-1 text-xs font-semibold text-gray-600 uppercase tracking-wider">Layanan & Lainnya</p>
             @can('layanan.read')
             <a href="{{ route('admin.services.index') }}" class="sidebar-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                 <i class="fas fa-concierge-bell icon"></i><span>Layanan</span>
             </a>
             @endcan
+            @canany(['survei.read', 'skm.read', 'layanan.read'])
+            <a href="{{ route('admin.surveys.index') }}" class="sidebar-link {{ request()->routeIs('admin.surveys.*') ? 'active' : '' }}">
+                <i class="fas fa-poll-h icon"></i><span>Survei SKM</span>
+            </a>
+            @endcanany
             @canany(['kontak.read', 'pesan.read'])
+
             <a href="{{ route('admin.contacts.index') }}" class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
                 <i class="fas fa-envelope icon"></i>
                 <span class="flex-1 flex items-center justify-between">
