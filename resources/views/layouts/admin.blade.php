@@ -15,17 +15,59 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-gray-100 antialiased" style="font-family:'Inter',sans-serif;" x-data="{ sidebarOpen: window.innerWidth >= 1024 }">
+<body class="bg-gray-100 antialiased" style="font-family:'Inter',sans-serif;" 
+    x-data="{ 
+        sidebarOpen: window.innerWidth >= 1024,
+        isMobile: window.innerWidth < 1024,
+        sidebarWidth: parseInt(localStorage.getItem('sidebarWidth')) || 256,
+        isResizing: false,
+        init() {
+            window.addEventListener('resize', () => {
+                this.isMobile = window.innerWidth < 1024;
+            });
+        },
+        startResize() {
+            this.isResizing = true;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+        },
+        doResize(e) {
+            if (this.isResizing) {
+                let newWidth = e.clientX;
+                if (newWidth < 220) newWidth = 220; 
+                if (newWidth > 450) newWidth = 450; 
+                this.sidebarWidth = newWidth;
+            }
+        },
+        stopResize() {
+            if (this.isResizing) {
+                this.isResizing = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                localStorage.setItem('sidebarWidth', this.sidebarWidth);
+            }
+        }
+    }"
+    @mousemove.window="doResize"
+    @mouseup.window="stopResize"
+>
 
 <div class="flex h-screen overflow-hidden">
 
     {{-- SIDEBAR --}}
-    <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 transform transition-transform duration-300 ease-in-out flex flex-col"
-           :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" @click.outside="if(window.innerWidth < 1024) sidebarOpen = false">
+    <aside class="fixed inset-y-0 left-0 z-50 bg-gray-900 transform transition-transform duration-300 flex flex-col"
+           :style="`width: ${sidebarWidth}px;`"
+           :class="[sidebarOpen ? 'translate-x-0' : '-translate-x-full', isResizing ? 'transition-none' : 'ease-in-out']" 
+           @click.outside="if(isMobile) sidebarOpen = false">
 
         {{-- Logo --}}
         <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-800">
-            <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-sm flex-shrink-0">S1</div>
+            @php $logo1 = \App\Models\Setting::get('school_logo'); @endphp
+            @if($logo1)
+                <img src="{{ Storage::url($logo1) }}" alt="Logo" class="w-10 h-10 object-contain flex-shrink-0">
+            @else
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-sm flex-shrink-0">S1</div>
+            @endif
             <div class="overflow-hidden">
                 <div class="font-bold text-white text-sm truncate">{{ \App\Models\Setting::get('school_short_name','SMAN 1') }}</div>
                 <div class="text-xs text-gray-500">Admin Panel ({{ ucfirst(auth()->user()->roles->first()->name ?? auth()->user()->role ?? 'Staff') }})</div>
@@ -213,14 +255,22 @@
                 <i class="fas fa-external-link-alt icon"></i><span>Lihat Website</span>
             </a>
         </div>
+        {{-- Resizer Handle --}}
+        <div class="absolute inset-y-0 right-0 w-1.5 cursor-col-resize hover:bg-blue-600/50 z-50 flex flex-col justify-center items-center group" 
+             @mousedown.prevent="startResize"
+             :class="{ 'bg-blue-600/50': isResizing }">
+            <div class="h-10 w-0.5 bg-gray-500 rounded-full group-hover:bg-blue-400" :class="{ 'bg-blue-400': isResizing }"></div>
+        </div>
     </aside>
 
     {{-- Overlay for mobile --}}
-    <div x-show="sidebarOpen && window.innerWidth < 1024" @click="sidebarOpen = false"
+    <div x-show="sidebarOpen && isMobile" @click="sidebarOpen = false"
          class="fixed inset-0 bg-black/50 z-40 lg:hidden" x-transition></div>
 
     {{-- MAIN --}}
-    <div class="flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out" :class="{ 'lg:ml-64': sidebarOpen, 'lg:ml-0': !sidebarOpen }">
+    <div class="flex-1 flex flex-col min-w-0 transition-all duration-300" 
+         :class="{ 'transition-none': isResizing, 'ease-in-out': !isResizing }"
+         :style="!isMobile && sidebarOpen ? `margin-left: ${sidebarWidth}px;` : 'margin-left: 0px;'">
 
         {{-- TOP HEADER --}}
         <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
